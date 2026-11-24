@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Traditional Nepali wedding artwork placeholder">
+  <defs>
+    <radialGradient id="bg1" cx="50%" cy="38%" r="80%">
+      <stop offset="0" stop-color="#8b1e2d"/>
+      <stop offset="1" stop-color="#35121b"/>
+    </radialGradient>
+    <radialGradient id="glow1" cx="50%" cy="45%" r="50%">
+      <stop offset="0" stop-color="#c6a15b" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#c6a15b" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots1" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M40 24c5 6 5 10 0 16-5-6-5-10 0-16Z" fill="none" stroke="#c6a15b" stroke-width="0.8" opacity="0.25"/>
+      <circle cx="40" cy="52" r="1.2" fill="#c6a15b" opacity="0.25"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg1)"/>
+  <rect width="800" height="1000" fill="url(#dots1)"/>
+  <circle cx="400" cy="440" r="340" fill="url(#glow1)"/>
+  <rect x="28" y="28" width="744" height="944" fill="none" stroke="#c6a15b" stroke-width="2" opacity="0.75"/>
+  <rect x="46" y="46" width="708" height="908" fill="none" stroke="#c6a15b" stroke-width="0.8" opacity="0.4"/>
+  <g fill="#c6a15b" opacity="0.8">
+    <path d="M28 28l12 12-12 12-12-12Z"/>
+    <path d="M772 28l12 12-12 12-12-12Z"/>
+    <path d="M28 972l12 12-12 12-12-12Z"/>
+    <path d="M772 972l12 12-12 12-12-12Z"/>
+  </g>
+  <g transform="translate(400 430)" fill="none" stroke="#c6a15b">
+    <circle r="176" stroke-width="1" opacity="0.5"/>
+    <circle r="156" stroke-width="0.8" stroke-dasharray="3 8" opacity="0.55"/>
+    <circle r="118" stroke-width="1" opacity="0.6"/>
+    <circle r="86" stroke-width="0.8" stroke-dasharray="2 7" opacity="0.5"/>
+    <circle r="44" stroke-width="1" opacity="0.7"/>
+    <g fill="#c6a15b" fill-opacity="0.16" stroke-width="0.8" opacity="0.9">
+      <ellipse cx="0" cy="-138" rx="30" ry="64"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(45)"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(90)"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(135)"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(225)"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(270)"/>
+      <ellipse cx="0" cy="-138" rx="30" ry="64" transform="rotate(315)"/>
+    </g>
+    <path d="M0-34 14 0 0 34-14 0Z" fill="#c6a15b" fill-opacity="0.28" stroke-width="1"/>
+  </g>
+  <text x="400" y="150" text-anchor="middle" fill="#e8d5a7" font-family="Georgia, serif" font-size="30" letter-spacing="8">॥ शुभ विवाह ॥</text>
+  <text x="400" y="760" text-anchor="middle" fill="#fff5e5" font-family="Georgia, serif" font-size="86" letter-spacing="10">A &amp; S</text>
+  <text x="400" y="820" text-anchor="middle" fill="#c6a15b" font-family="Georgia, serif" font-size="20" letter-spacing="8">KATHMANDU · NEPAL</text>
+  <g transform="translate(400 900)" fill="none" stroke="#c6a15b" opacity="0.65">
+    <path d="M-140 0h118M22 0h118" stroke-width="1"/>
+    <path d="M0-10 10 0 0 10-10 0Z" stroke-width="1"/>
+    <circle cx="-128" cy="0" r="2" fill="#c6a15b"/>
+    <circle cx="128" cy="0" r="2" fill="#c6a15b"/>
+  </g>
+</svg>

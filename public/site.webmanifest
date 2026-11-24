@@ -1,0 +1,32 @@
+{
+  "name": "Aarav & Sita — Shubh Vivah",
+  "short_name": "A & S Wedding",
+  "description": "A traditional Nepali wedding invitation for Aarav Sharma and Sita Thapa.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#721C2C",
+  "theme_color": "#721C2C",
+  "icons": [
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
