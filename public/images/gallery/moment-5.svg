@@ -1,30 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" role="img" aria-label="Traditional Nepali wedding artwork placeholder">
   <defs>
     <radialGradient id="bg5" cx="50%" cy="45%" r="84%">
-      <stop offset="0" stop-color="#7d2130"/>
-      <stop offset="1" stop-color="#30111a"/>
+      <stop offset="0" stop-color="#FFF4E6"/>
+      <stop offset="1" stop-color="#F8D4A5"/>
     </radialGradient>
     <pattern id="dots5" width="88" height="88" patternUnits="userSpaceOnUse">
-      <path d="M44 24c6 7 6 12 0 19-6-7-6-12 0-19Z" fill="none" stroke="#c6a15b" stroke-width="0.7" opacity="0.2"/>
-      <circle cx="44" cy="56" r="1.2" fill="#c6a15b" opacity="0.2"/>
+      <path d="M44 24c6 7 6 12 0 19-6-7-6-12 0-19Z" fill="none" stroke="#8F1116" stroke-width="0.7" opacity="0.2"/>
+      <circle cx="44" cy="56" r="1.2" fill="#8F1116" opacity="0.2"/>
     </pattern>
   </defs>
   <rect width="800" height="1000" fill="url(#bg5)"/>
   <rect width="800" height="1000" fill="url(#dots5)"/>
-  <rect x="26" y="26" width="748" height="948" fill="none" stroke="#c6a15b" stroke-width="2" opacity="0.7"/>
-  <rect x="44" y="44" width="712" height="912" fill="none" stroke="#e8d5a7" stroke-width="0.7" opacity="0.32"/>
-  <g fill="none" stroke="#c6a15b" opacity="0.6">
+  <rect x="26" y="26" width="748" height="948" fill="none" stroke="#8F1116" stroke-width="2" opacity="0.7"/>
+  <rect x="44" y="44" width="712" height="912" fill="none" stroke="#B52B35" stroke-width="0.7" opacity="0.32"/>
+  <g fill="none" stroke="#8F1116" opacity="0.6">
     <path d="M96 250c60-42 96-18 116 22 20-40 56-64 116-22" stroke-width="1.2"/>
     <path d="M96 250c20 20 34 50 12 78-30-16-42-44-12-78Z" stroke-width="1"/>
     <path d="M600 250c-60-42-96-18-116 22-20-40-56-64-116-22" stroke-width="1.2"/>
     <path d="M604 250c-20 20-34 50-12 78 30-16 42-44 12-78Z" stroke-width="1"/>
   </g>
-  <g transform="translate(400 470)" fill="none" stroke="#c6a15b">
+  <g transform="translate(400 470)" fill="none" stroke="#8F1116">
     <circle r="170" stroke-width="1" opacity="0.5"/>
     <circle r="140" stroke-width="0.8" stroke-dasharray="3 8" opacity="0.55"/>
     <circle r="100" stroke-width="1" opacity="0.65"/>
     <circle r="62" stroke-width="0.8" stroke-dasharray="2 6" opacity="0.5"/>
-    <g fill="#c6a15b" fill-opacity="0.18" stroke-width="0.9">
+    <g fill="#8F1116" fill-opacity="0.18" stroke-width="0.9">
       <path d="M0-120c34 26 34 54 0 80-34-26-34-54 0-80Z"/>
       <path d="M0-120c34 26 34 54 0 80-34-26-34-54 0-80Z" transform="rotate(60)"/>
       <path d="M0-120c34 26 34 54 0 80-34-26-34-54 0-80Z" transform="rotate(120)"/>
@@ -32,9 +32,9 @@
       <path d="M0-120c34 26 34 54 0 80-34-26-34-54 0-80Z" transform="rotate(240)"/>
       <path d="M0-120c34 26 34 54 0 80-34-26-34-54 0-80Z" transform="rotate(300)"/>
     </g>
-    <path d="M0-38 20 0 0 38-20 0Z" fill="#e8d5a7" fill-opacity="0.26" stroke-width="1"/>
+    <path d="M0-38 20 0 0 38-20 0Z" fill="#B52B35" fill-opacity="0.26" stroke-width="1"/>
   </g>
-  <text x="400" y="790" text-anchor="middle" fill="#e8d5a7" font-family="Georgia, serif" font-size="26" letter-spacing="10">॥ मेहेन्दी ॥</text>
-  <text x="400" y="852" text-anchor="middle" fill="#fff5e5" font-family="Georgia, serif" font-size="30" letter-spacing="7">HENNA &amp; LAUGHTER</text>
-  <text x="400" y="908" text-anchor="middle" fill="#c6a15b" font-family="Georgia, serif" font-size="18" letter-spacing="6">WITH OUR LOVED ONES</text>
+  <text x="400" y="790" text-anchor="middle" fill="#B52B35" font-family="Georgia, serif" font-size="26" letter-spacing="10">॥ मेहेन्दी ॥</text>
+  <text x="400" y="852" text-anchor="middle" fill="#8F1116" font-family="Georgia, serif" font-size="30" letter-spacing="7">HENNA &amp; LAUGHTER</text>
+  <text x="400" y="908" text-anchor="middle" fill="#8F1116" font-family="Georgia, serif" font-size="18" letter-spacing="6">WITH OUR LOVED ONES</text>
 </svg>

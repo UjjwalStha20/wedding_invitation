@@ -1,10 +1,9 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
-import {
-  weddingConfig,
-  type GalleryPhoto,
-} from '../config/wedding'
+import type { GalleryPhoto } from '../config/wedding'
+import { useWeddingConfig } from '../hooks/useWeddingConfig'
+import { FloralCorner } from './decorations/FloralCorner'
 import { Mandala } from './decorations/Mandala'
 import { Monogram } from './decorations/Monogram'
 import { PaperPattern } from './decorations/PaperPattern'
@@ -20,6 +19,7 @@ interface PhotoTileProps {
 
 function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
   const [failed, setFailed] = useState(false)
+  const weddingConfig = useWeddingConfig()
   const { groom, bride } = weddingConfig.couple
   const label = photo.caption ?? photo.alt
 
@@ -29,12 +29,12 @@ function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
         type="button"
         onClick={() => onOpen(index)}
         aria-label={`View photo: ${label}`}
-        className="group relative block w-full cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+        className="group relative block w-full cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-burgundy"
       >
-        <div className="relative border border-gold/60 bg-ivory p-1.5 shadow-card transition-colors duration-500 group-hover:border-gold">
-          <div className="relative overflow-hidden border border-gold/25">
+        <div className="relative border border-burgundy/40 bg-cream p-1.5 shadow-card transition-colors duration-500 group-hover:border-burgundy">
+          <div className="relative overflow-hidden border border-blush/60">
             {failed ? (
-              <div className="grid aspect-[4/5] w-full place-items-center bg-maroon-deep">
+              <div className="grid aspect-[4/5] w-full place-items-center bg-burgundy-deep">
                 <Monogram
                   groomName={groom.name}
                   brideName={bride.name}
@@ -53,25 +53,25 @@ function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
             )}
 
             <span
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(53,18,27,0)_45%,rgba(53,18,27,0.72)_100%)] opacity-80 transition-opacity duration-500 group-hover:opacity-95"
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,244,230,0)_38%,rgba(255,235,216,0.94)_100%)] opacity-90 transition-opacity duration-500 group-hover:opacity-100"
               aria-hidden="true"
             />
 
             <span
-              className="pointer-events-none absolute inset-2 border border-gold/25"
+              className="pointer-events-none absolute inset-2 border border-cream/30"
               aria-hidden="true"
             />
 
-            <span className="absolute left-3 top-3 h-1.5 w-1.5 rotate-45 border border-gold/70 bg-burgundy/60" aria-hidden="true" />
-            <span className="absolute right-3 top-3 h-1.5 w-1.5 rotate-45 border border-gold/70 bg-burgundy/60" aria-hidden="true" />
-            <span className="absolute bottom-3 left-3 h-1.5 w-1.5 rotate-45 border border-gold/70 bg-burgundy/60" aria-hidden="true" />
-            <span className="absolute bottom-3 right-3 h-1.5 w-1.5 rotate-45 border border-gold/70 bg-burgundy/60" aria-hidden="true" />
+            <span className="absolute left-3 top-3 h-1.5 w-1.5 rotate-45 border border-blush/80 bg-burgundy/70" aria-hidden="true" />
+            <span className="absolute right-3 top-3 h-1.5 w-1.5 rotate-45 border border-blush/80 bg-burgundy/70" aria-hidden="true" />
+            <span className="absolute bottom-3 left-3 h-1.5 w-1.5 rotate-45 border border-blush/80 bg-burgundy/70" aria-hidden="true" />
+            <span className="absolute bottom-3 right-3 h-1.5 w-1.5 rotate-45 border border-blush/80 bg-burgundy/70" aria-hidden="true" />
 
             <span className="absolute inset-x-0 bottom-0 flex flex-col items-center px-4 pb-4 pt-8 text-center">
-              <span className="font-body text-lg italic leading-snug text-ivory drop-shadow-[0_1px_6px_rgba(53,18,27,0.9)]">
+              <span className="font-body text-lg italic leading-snug text-burgundy">
                 {label}
               </span>
-              <span className="mt-1 font-display text-[0.5rem] uppercase tracking-[0.26em] text-gold-light/80">
+              <span className="mt-1 font-display text-[0.5rem] uppercase tracking-[0.26em] text-rose/80">
                 View photo
               </span>
             </span>
@@ -83,6 +83,7 @@ function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
 }
 
 export function PhotoGallery() {
+  const weddingConfig = useWeddingConfig()
   const photos = weddingConfig.photos?.gallery ?? []
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [lightboxFailed, setLightboxFailed] = useState(false)
@@ -134,24 +135,34 @@ export function PhotoGallery() {
   return (
     <section
       id="photos"
-      className="relative overflow-hidden border-y border-gold/20 bg-ivory-deep py-20 sm:py-28"
+      className="relative overflow-hidden border-y border-burgundy/15 bg-cream py-16 sm:py-24"
       aria-labelledby="photos-heading"
     >
-      <PaperPattern className="text-gold" opacity={0.19} />
+      <PaperPattern className="text-burgundy" opacity={0.1} />
       <Mandala
-        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(150vw,900px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.06]"
+        className="pointer-events-none absolute left-1/2 top-1/2 w-[min(150vw,900px)] -translate-x-1/2 -translate-y-1/2 text-leaf opacity-[0.08]"
         speed={260}
+      />
+      <FloralCorner
+        corner="top-left"
+        className="w-[clamp(110px,16vw,210px)]"
+        opacity={0.45}
+      />
+      <FloralCorner
+        corner="bottom-right"
+        className="hidden w-[clamp(110px,16vw,210px)] sm:block"
+        opacity={0.4}
       />
 
       <div className="relative z-10 mx-auto max-w-5xl px-5 sm:px-8">
         <SectionTitle
           headingId="photos-heading"
           nepali="हाम्रा क्षणहरू"
-          title="Moments Together"
-          subtitle="A few cherished memories from our journey"
+          title="Our Photos"
+          subtitle="A few special moments from our journey together."
         />
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
           {photos.map((photo, index) => (
             <PhotoTile
               key={`${photo.src}-${index}`}
@@ -162,7 +173,7 @@ export function PhotoGallery() {
           ))}
         </div>
 
-        <p className="mt-6 text-center font-body text-sm italic text-burgundy/55">
+        <p className="mt-4 text-center font-body text-sm italic text-burgundy/55">
           Tap any photograph to view it larger.
         </p>
       </div>
@@ -173,7 +184,7 @@ export function PhotoGallery() {
         titleId="gallery-lightbox-title"
         className="max-w-[820px]"
       >
-        <div className="relative bg-maroon-deep px-4 pb-4 pt-12 sm:px-6">
+        <div className="relative bg-burgundy-deep px-4 pb-4 pt-12 sm:px-6">
           <h2 id="gallery-lightbox-title" className="sr-only">
             Wedding photo viewer
           </h2>
@@ -195,7 +206,7 @@ export function PhotoGallery() {
                   className="mx-auto max-h-[68svh] w-auto max-w-full object-contain"
                 />
               ) : (
-                <div className="grid aspect-[4/5] w-full max-w-sm place-items-center bg-burgundy">
+                <div className="grid aspect-[4/5] w-full max-w-sm place-items-center bg-burgundy-deep">
                   <Monogram
                     groomName={groom.name}
                     brideName={bride.name}
@@ -212,7 +223,7 @@ export function PhotoGallery() {
                 type="button"
                 onClick={() => step(-1)}
                 aria-label="Previous photo"
-                className="absolute left-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center border border-gold/50 bg-burgundy/80 text-gold-light transition-colors hover:border-gold hover:bg-burgundy sm:left-4"
+                className="absolute left-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center border border-cream/40 bg-burgundy/80 text-cream transition-colors hover:border-cream hover:bg-burgundy sm:left-4"
               >
                 <ChevronLeft className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -220,7 +231,7 @@ export function PhotoGallery() {
                 type="button"
                 onClick={() => step(1)}
                 aria-label="Next photo"
-                className="absolute right-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center border border-gold/50 bg-burgundy/80 text-gold-light transition-colors hover:border-gold hover:bg-burgundy sm:right-4"
+                className="absolute right-2 top-1/2 z-10 grid h-11 w-11 -translate-y-1/2 place-items-center border border-cream/40 bg-burgundy/80 text-cream transition-colors hover:border-cream hover:bg-burgundy sm:right-4"
               >
                 <ChevronRight className="h-5 w-5" aria-hidden="true" />
               </button>
@@ -232,7 +243,7 @@ export function PhotoGallery() {
           <p className="font-body text-xl italic text-burgundy">
             {activeLabel}
           </p>
-          <p className="font-display text-[0.58rem] uppercase tracking-[0.24em] text-gold-deep">
+          <p className="font-display text-[0.58rem] uppercase tracking-[0.24em] text-leaf-deep">
             {activeIndex !== null ? activeIndex + 1 : 0} / {photos.length}
           </p>
         </div>

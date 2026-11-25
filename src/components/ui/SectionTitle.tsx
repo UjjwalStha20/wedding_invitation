@@ -1,4 +1,4 @@
-import { GoldDivider } from '../decorations/GoldDivider'
+import { FloralDivider } from '../decorations/FloralDivider'
 import { Reveal } from './Reveal'
 
 interface SectionTitleProps {
@@ -25,24 +25,24 @@ export function SectionTitle({
       <p
         lang="ne"
         className={`font-devanagari text-base tracking-[0.08em] ${
-          isLight ? 'text-gold-light' : 'text-gold-deep'
+          isLight ? 'text-blush' : 'text-leaf-deep'
         }`}
       >
         {nepali}
       </p>
       <h2
         id={headingId}
-        className={`mt-2 font-display text-[clamp(1.85rem,4vw,2.8rem)] tracking-[0.04em] ${
-          isLight ? 'text-ivory' : 'text-burgundy'
+        className={`mt-2 font-display text-[clamp(1.85rem,4vw,2.8rem)] tracking-[0.03em] ${
+          isLight ? 'text-cream' : 'text-burgundy'
         }`}
       >
         {title}
       </h2>
-      <GoldDivider className="mt-4" />
+      <FloralDivider className="mt-3" />
       {subtitle ? (
         <p
-          className={`mx-auto mt-3 max-w-xl text-lg italic ${
-            isLight ? 'text-ivory/70' : 'text-burgundy/70'
+          className={`mx-auto mt-2 max-w-xl font-body text-lg italic ${
+            isLight ? 'text-cream/75' : 'text-brown/80'
           }`}
         >
           {subtitle}

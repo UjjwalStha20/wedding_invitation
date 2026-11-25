@@ -13,21 +13,19 @@ interface InvitationPageProps {
   guestName: string | null
   opened: boolean
   mainRef: RefObject<HTMLElement | null>
-  onOpenGenerator: () => void
 }
 
 export function InvitationPage({
   guestName,
   opened,
   mainRef,
-  onOpenGenerator,
 }: InvitationPageProps) {
   return (
     <main
       ref={mainRef}
       id="invitation"
       aria-hidden={opened ? undefined : true}
-      className="relative min-h-[100svh] bg-ivory"
+      className="relative min-h-[100svh] bg-peach"
     >
       <GaneshSection />
       <CoupleSection />
@@ -36,7 +34,7 @@ export function InvitationPage({
       <WeddingDetails />
       <EventSchedule />
       <VenueSection />
-      <ClosingSection onOpenGenerator={onOpenGenerator} />
+      <ClosingSection />
     </main>
   )
 }

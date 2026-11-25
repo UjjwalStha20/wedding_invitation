@@ -2,13 +2,21 @@ import { useId } from 'react'
 
 interface GaneshMotifProps {
   className?: string
+  tone?: 'burgundy' | 'cream'
 }
 
 const haloPetals = Array.from({ length: 12 }, (_, index) => index)
 
-export function GaneshMotif({ className = '' }: GaneshMotifProps) {
-  const gradientId = `ganesh-gold-${useId().replaceAll(':', '')}`
+export function GaneshMotif({
+  className = '',
+  tone = 'burgundy',
+}: GaneshMotifProps) {
+  const gradientId = `ganesh-${tone}-${useId().replaceAll(':', '')}`
   const stroke = `url(#${gradientId})`
+  const stops =
+    tone === 'cream'
+      ? ['#FFF7EA', '#F8D4A5', '#E9A5A1']
+      : ['#D98A8E', '#8F1116', '#6E0C10']
 
   return (
     <svg
@@ -26,9 +34,9 @@ export function GaneshMotif({ className = '' }: GaneshMotifProps) {
           y2="286"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stopColor="#F0E0BB" />
-          <stop offset="0.48" stopColor="#C6A15B" />
-          <stop offset="1" stopColor="#A57C3D" />
+          <stop offset="0" stopColor={stops[0]} />
+          <stop offset="0.48" stopColor={stops[1]} />
+          <stop offset="1" stopColor={stops[2]} />
         </linearGradient>
       </defs>
 

@@ -1,7 +1,7 @@
 import { AnimatePresence, LayoutGroup } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { EnvelopeOpening } from './components/EnvelopeOpening'
-import { InvitationGenerator } from './components/InvitationGenerator'
+import { InvitationLinkGeneratorPage } from './components/InvitationLinkGeneratorPage'
 import { InvitationPage } from './components/InvitationPage'
 import { ErrorBoundary } from './components/ui/ErrorBoundary'
 import { Toast, type ToastMessage } from './components/ui/Toast'
@@ -9,59 +9,28 @@ import { weddingConfig } from './config/wedding'
 import { useGuestName } from './hooks/useGuestName'
 import { applyWeddingSeo } from './utils/seo'
 
-function App() {
-  const guestName = useGuestName()
-  const [opened, setOpened] = useState(false)
-  const [generatorOpen, setGeneratorOpen] = useState(false)
+function InvitationExperience({ guestName }: { guestName: string | null }) {
+  const [opened, setOpened] = useState(true)
   const toast = useState<ToastMessage | null>(null)[0]
   const mainRef = useRef<HTMLElement>(null)
-  const toastTimerRef = useRef<number | null>(null)
 
   useEffect(() => {
     applyWeddingSeo(weddingConfig)
   }, [])
 
   useEffect(() => {
-    return () => {
-      if (toastTimerRef.current !== null) {
-        window.clearTimeout(toastTimerRef.current)
-      }
-    }
+    const id = window.location.hash.slice(1)
+    if (!id) return
+    const timer = window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ block: 'start' })
+    }, 600)
+    return () => window.clearTimeout(timer)
   }, [])
 
   useEffect(() => {
-    if (opened) return
-
-    window.scrollTo({ top: 0, behavior: 'auto' })
-  }, [opened])
-
-  useEffect(() => {
-    return () => {
-      if (toastTimerRef.current !== null) {
-        window.clearTimeout(toastTimerRef.current)
-      }
+    if (!opened) {
+      window.scrollTo({ top: 0, behavior: 'auto' })
     }
-  }, [])
-
-  useEffect(() => {
-    const main = mainRef.current
-    if (!main) return
-
-    if (opened) {
-      main.removeAttribute('inert')
-    } else {
-      main.setAttribute('inert', '')
-    }
-  }, [opened])
-
-  useEffect(() => {
-    if (!opened) return
-
-    const focusTimer = window.setTimeout(() => {
-      document.getElementById('invitation-title')?.focus({ preventScroll: true })
-    }, 900)
-
-    return () => window.clearTimeout(focusTimer)
   }, [opened])
 
   useEffect(() => {
@@ -77,11 +46,9 @@ function App() {
 
   useEffect(() => {
     if (!opened) return
-
     const focusTimer = window.setTimeout(() => {
       document.getElementById('invitation-title')?.focus({ preventScroll: true })
     }, 900)
-
     return () => window.clearTimeout(focusTimer)
   }, [opened])
 
@@ -90,9 +57,6 @@ function App() {
     setOpened(true)
   }, [])
 
-  const openGenerator = useCallback(() => setGeneratorOpen(true), [])
-  const closeGenerator = useCallback(() => setGeneratorOpen(false), [])
-
   return (
     <ErrorBoundary>
       <LayoutGroup id="invitation">
@@ -100,21 +64,26 @@ function App() {
           guestName={guestName}
           opened={opened}
           mainRef={mainRef}
-          onOpenGenerator={openGenerator}
         />
-
         <AnimatePresence>
           {!opened ? <EnvelopeOpening onOpen={handleOpen} /> : null}
         </AnimatePresence>
-
-        <InvitationGenerator
-          open={generatorOpen}
-          onClose={closeGenerator}
-        />
-
         <Toast toast={toast} />
       </LayoutGroup>
     </ErrorBoundary>
+  )
+}
+
+function InvitationRoute() {
+  return <InvitationExperience guestName={useGuestName()} />
+}
+
+function App() {
+  const pathname = window.location.pathname.replace(/\/+$/, '')
+  return pathname === '/generate' ? (
+    <InvitationLinkGeneratorPage />
+  ) : (
+    <InvitationRoute />
   )
 }
 

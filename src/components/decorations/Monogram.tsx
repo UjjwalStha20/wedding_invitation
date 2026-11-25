@@ -15,23 +15,23 @@ export function Monogram({
 }: MonogramProps) {
   return (
     <div
-      className={`relative grid aspect-square place-items-center rounded-full bg-maroon text-gold-light shadow-luxe ${className}`}
+      className={`relative grid aspect-square place-items-center rounded-full border border-burgundy/40 bg-cream text-burgundy shadow-soft ${className}`}
       aria-hidden="true"
     >
-      <div className="absolute inset-1.5 rounded-full border border-gold/70" />
-      <div className="absolute inset-3.5 rounded-full border border-gold/35" />
-      <div className="absolute inset-5 rounded-full border border-gold/20" />
+      <div className="absolute inset-1.5 rounded-full border border-burgundy/55" />
+      <div className="absolute inset-3.5 rounded-full border border-burgundy/30" />
+      <div className="absolute inset-5 rounded-full border border-leaf/25" />
 
-      <span className="absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-gold/80" />
-      <span className="absolute bottom-2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-gold/80" />
-      <span className="absolute left-2 top-1/2 h-1 w-1 -translate-y-1/2 rotate-45 bg-gold/60" />
-      <span className="absolute right-2 top-1/2 h-1 w-1 -translate-y-1/2 rotate-45 bg-gold/60" />
+      <span className="absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-burgundy/70" />
+      <span className="absolute bottom-2 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rotate-45 bg-burgundy/70" />
+      <span className="absolute left-2 top-1/2 h-1 w-1 -translate-y-1/2 rotate-45 bg-leaf" />
+      <span className="absolute right-2 top-1/2 h-1 w-1 -translate-y-1/2 rotate-45 bg-leaf" />
 
       <div className="flex items-baseline gap-2.5 font-display">
         <span className="text-[clamp(2rem,9vw,3.6rem)] leading-none">
           {firstInitial(groomName)}
         </span>
-        <span className="font-body text-[clamp(1.5rem,5vw,2.4rem)] italic leading-none text-gold">
+        <span className="font-body text-[clamp(1.5rem,5vw,2.4rem)] italic leading-none text-rose">
           &
         </span>
         <span className="text-[clamp(2rem,9vw,3.6rem)] leading-none">
@@ -39,13 +39,13 @@ export function Monogram({
         </span>
       </div>
 
-      <span className="absolute bottom-[18%] font-devanagari text-[0.6rem] tracking-[0.18em] text-gold/70">
+      <span className="absolute bottom-[18%] font-devanagari text-[0.6rem] tracking-[0.18em] text-leaf-deep">
         शुभ विवाह
       </span>
 
       <svg
         viewBox="0 0 48 20"
-        className="absolute -top-2.5 left-1/2 h-5 w-12 -translate-x-1/2 text-gold"
+        className="absolute -top-2.5 left-1/2 h-5 w-12 -translate-x-1/2 text-burgundy"
         fill="none"
       >
         <path

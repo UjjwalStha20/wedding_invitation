@@ -5,7 +5,7 @@ export function LeftPanel({ className = '' }: { className?: string }) {
   return (
     <section
       className={`relative bg-ivory overflow-hidden min-h-[400px] py-8 sm:py-12 border-y border-burgundy/30 ${className}`}
-      aria-label="Left panel of inside invitation"
+      aria-label="Left side of the invitation"
     >
       <PaperPattern className="text-gold" opacity={0.15} />
 

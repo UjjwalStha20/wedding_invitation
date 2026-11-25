@@ -1,13 +1,20 @@
 import { useEffect, useState } from 'react'
-import { getGuestName } from '../utils/invitation'
+import { normalizeGuestName } from '../utils/invitation'
+
+function getGuestName(): string | null {
+  return normalizeGuestName(
+    new URLSearchParams(window.location.search).get('name'),
+  )
+}
 
 export function useGuestName(): string | null {
-  const [guestName, setGuestName] = useState<string | null>(() => getGuestName())
-
+  const [guestName, setGuestName] = useState(getGuestName)
   useEffect(() => {
-    const refresh = () => setGuestName(getGuestName())
-    window.addEventListener('popstate', refresh)
-    return () => window.removeEventListener('popstate', refresh)
+    const handlePopState = () => setGuestName(getGuestName())
+    window.addEventListener('popstate', handlePopState)
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
   }, [])
 
   return guestName

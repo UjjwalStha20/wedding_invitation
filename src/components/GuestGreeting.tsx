@@ -1,8 +1,9 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { weddingConfig } from '../config/wedding'
+import { useWeddingConfig } from '../hooks/useWeddingConfig'
 import { getDisplayGuestName } from '../utils/invitation'
+import { FloralCorner } from './decorations/FloralCorner'
+import { FloralDivider } from './decorations/FloralDivider'
 import { FloatingPetals } from './decorations/FloatingPetals'
-import { GoldDivider } from './decorations/GoldDivider'
 import { PaperPattern } from './decorations/PaperPattern'
 import { Reveal } from './ui/Reveal'
 
@@ -12,32 +13,46 @@ interface GuestGreetingProps {
 
 export function GuestGreeting({ guestName }: GuestGreetingProps) {
   const reduceMotion = useReducedMotion()
-  const displayName = getDisplayGuestName(guestName)
+  const weddingConfig = useWeddingConfig()
+  const displayName = getDisplayGuestName(
+    guestName,
+    weddingConfig.messages.genericGuestName,
+  )
 
   return (
     <section
       id="greeting"
-      className="relative overflow-hidden bg-royal py-20 text-ivory sm:py-24"
+      className="relative overflow-hidden bg-cream py-16 text-burgundy sm:py-20"
       aria-labelledby="greeting-heading"
     >
-      <PaperPattern className="text-gold" opacity={0.2} />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(198,161,91,0.08)_0%,rgba(53,18,27,0.3)_100%)]" />
-      <FloatingPetals className="opacity-70" />
+      <PaperPattern className="text-burgundy" opacity={0.13} />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,244,230,0.8)_0%,rgba(248,212,165,0.35)_100%)]" />
+      <FloralCorner
+        corner="top-left"
+        className="hidden w-[clamp(120px,18vw,240px)] sm:block"
+        opacity={0.55}
+      />
+      <FloralCorner
+        corner="bottom-right"
+        className="hidden w-[clamp(120px,18vw,240px)] sm:block"
+        opacity={0.5}
+      />
+      <FloatingPetals className="opacity-60" />
 
       <div className="relative z-10 mx-auto max-w-3xl px-5 text-center sm:px-8">
         <Reveal>
           <p
             lang="ne"
-            className="font-devanagari text-base tracking-[0.08em] text-gold-light"
+            className="font-devanagari text-base tracking-[0.08em] text-leaf-deep"
           >
             आदरणीय अतिथि
           </p>
-          <p className="eyebrow mt-2 text-gold/70">A personal invitation</p>
+          <p className="eyebrow mt-2 text-brown/70">A personal invitation</p>
         </Reveal>
 
         <motion.h2
           id="greeting-heading"
-          className="mt-6 flex flex-col items-center font-display leading-[1.15]"
+          className="mt-4 flex flex-col items-center leading-[1.12]"
           initial={reduceMotion ? false : 'hidden'}
           whileInView={reduceMotion ? undefined : 'visible'}
           viewport={{ once: true, amount: 0.5 }}
@@ -47,7 +62,7 @@ export function GuestGreeting({ guestName }: GuestGreetingProps) {
           }}
         >
           <motion.span
-            className="font-body text-[clamp(1.5rem,3.8vw,2.15rem)] italic text-ivory/70"
+            className="font-script text-[clamp(2rem,5vw,2.8rem)] text-rose"
             variants={{
               hidden: { opacity: 0, y: 12 },
               visible: {
@@ -60,7 +75,7 @@ export function GuestGreeting({ guestName }: GuestGreetingProps) {
             Dear
           </motion.span>
           <motion.span
-            className="mt-1 max-w-full break-words px-1 text-[clamp(1.95rem,6vw,3.35rem)] tracking-[0.025em] text-gold-light [overflow-wrap:anywhere]"
+            className="mt-1 max-w-full break-words px-1 font-display text-[clamp(1.95rem,6vw,3.35rem)] tracking-[0.02em] text-burgundy [overflow-wrap:anywhere]"
             variants={{
               hidden: { opacity: 0, y: 16 },
               visible: {
@@ -74,9 +89,9 @@ export function GuestGreeting({ guestName }: GuestGreetingProps) {
           </motion.span>
         </motion.h2>
 
-        <Reveal delay={0.15} className="mt-6">
-          <GoldDivider />
-          <p className="mx-auto mt-5 max-w-2xl font-body text-xl leading-relaxed text-ivory/85 sm:text-2xl">
+        <Reveal delay={0.15} className="mt-4">
+          <FloralDivider />
+          <p className="mx-auto mt-3 max-w-2xl font-body text-xl leading-relaxed text-brown/85 sm:text-2xl">
             {weddingConfig.messages.guestInvitation}
           </p>
         </Reveal>

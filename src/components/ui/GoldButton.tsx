@@ -18,9 +18,9 @@ export function GoldLink({
   children,
 }: GoldButtonProps) {
   const variantClasses = {
-    solid: 'border border-gold bg-gold text-ivory hover:bg-gold/90',
-    quiet: 'border border-gold/30 bg-ivory text-gold-hover hover:text-gold-deep',
-    dark: 'border border-gold bg-maroon text-gold-light hover:bg-maroon-deep',
+    solid: 'border border-burgundy bg-burgundy text-cream shadow-soft hover:bg-burgundy-deep',
+    quiet: 'border border-burgundy/40 bg-cream/70 text-burgundy hover:border-burgundy hover:bg-cream',
+    dark: 'border border-brown bg-brown text-cream hover:bg-burgundy',
   }
 
   return (
@@ -28,7 +28,7 @@ export function GoldLink({
       href={href}
       target={target}
       rel={rel}
-      className={`${variantClasses[variant]} ${className} inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors`}
+      className={`${variantClasses[variant]} ${className} inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-5 py-2.5 font-display text-[0.68rem] uppercase tracking-[0.16em] transition-colors duration-300`}
     >
       {children}
     </a>
@@ -44,9 +44,9 @@ export function GoldButton({
   children,
 }: GoldButtonProps) {
   const variantClasses = {
-    solid: 'border border-gold bg-gold text-ivory hover:bg-gold/90',
-    quiet: 'border border-gold/30 bg-ivory text-gold-hover hover:text-gold-deep',
-    dark: 'border border-gold bg-maroon text-gold-light hover:bg-maroon-deep',
+    solid: 'border border-burgundy bg-burgundy text-cream shadow-soft hover:bg-burgundy-deep',
+    quiet: 'border border-burgundy/40 bg-cream/70 text-burgundy hover:border-burgundy hover:bg-cream',
+    dark: 'border border-brown bg-brown text-cream hover:bg-burgundy',
   }
 
   const classes = variantClasses[variant as keyof typeof variantClasses] || variantClasses.solid
@@ -56,7 +56,7 @@ export function GoldButton({
       href={href}
       target={target}
       rel={rel}
-      className={`${classes} ${className} inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors`}
+      className={`${classes} ${className} inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-5 py-2.5 font-display text-[0.68rem] uppercase tracking-[0.16em] transition-colors duration-300`}
     >
       {children}
     </a>

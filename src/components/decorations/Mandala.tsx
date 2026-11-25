@@ -15,7 +15,7 @@ export function Mandala({ className = '', speed = 160 }: MandalaProps) {
   return (
     <motion.svg
       viewBox="0 0 480 480"
-      className={`text-gold ${className}`}
+      className={className}
       fill="none"
       aria-hidden="true"
       animate={reduceMotion ? undefined : { rotate: 360 }}

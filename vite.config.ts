@@ -16,7 +16,5 @@ export default defineConfig(({ mode }) => {
     },
   }
 
-  return {
-    plugins: [react(), tailwindcss(), injectSiteUrl],
-  }
+  return { plugins: [react(), tailwindcss(), injectSiteUrl] }
 })

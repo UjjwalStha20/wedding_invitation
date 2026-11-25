@@ -5,13 +5,16 @@ interface FloatingPetalsProps {
 }
 
 const petals = [
-  { left: '8%', top: '18%', size: 18, duration: 20, delay: 0, drift: 14 },
-  { left: '18%', top: '68%', size: 12, duration: 17, delay: 2.5, drift: -10 },
-  { left: '33%', top: '28%', size: 9, duration: 24, delay: 1.2, drift: 18 },
-  { left: '67%', top: '16%', size: 11, duration: 22, delay: 3.4, drift: -16 },
-  { left: '81%', top: '58%', size: 17, duration: 19, delay: 0.8, drift: 12 },
-  { left: '92%', top: '34%', size: 10, duration: 26, delay: 4.1, drift: -8 },
-  { left: '48%', top: '82%', size: 8, duration: 18, delay: 2, drift: 20 },
+  { left: '5%', size: 18, start: -10, duration: 26, delay: 0, drift: 22, color: '#E9A5A1', opacity: 0.6 },
+  { left: '14%', size: 13, start: -46, duration: 31, delay: 2.4, drift: -18, color: '#FFF4E6', opacity: 0.7 },
+  { left: '26%', size: 10, start: -78, duration: 24, delay: 1.1, drift: 26, color: '#B52B35', opacity: 0.38 },
+  { left: '38%', size: 15, start: -26, duration: 29, delay: 3.6, drift: -24, color: '#E9A5A1', opacity: 0.5 },
+  { left: '52%', size: 11, start: -62, duration: 34, delay: 0.6, drift: 20, color: '#F8D4A5', opacity: 0.65 },
+  { left: '64%', size: 16, start: -18, duration: 27, delay: 4.2, drift: -26, color: '#B52B35', opacity: 0.32 },
+  { left: '74%', size: 12, start: -88, duration: 23, delay: 1.8, drift: 18, color: '#FFF4E6', opacity: 0.6 },
+  { left: '84%', size: 19, start: -38, duration: 32, delay: 2.9, drift: -20, color: '#E9A5A1', opacity: 0.55 },
+  { left: '93%', size: 13, start: -70, duration: 28, delay: 0.3, drift: 16, color: '#8F1116', opacity: 0.32 },
+  { left: '45%', size: 9, start: -104, duration: 36, delay: 5.1, drift: 24, color: '#E9A5A1', opacity: 0.45 },
 ]
 
 export function FloatingPetals({ className = '' }: FloatingPetalsProps) {
@@ -26,39 +29,47 @@ export function FloatingPetals({ className = '' }: FloatingPetalsProps) {
     >
       {petals.map((petal, index) => (
         <motion.span
-          key={`${petal.left}-${petal.top}`}
-          className="absolute text-gold"
-          style={{
-            left: petal.left,
-            top: petal.top,
-            opacity: index % 2 === 0 ? 0.3 : 0.18,
-          }}
+          key={`${petal.left}-${petal.start}`}
+          className="absolute top-0"
+          style={{ left: petal.left, opacity: petal.opacity }}
           animate={{
-            y: [0, -22, 0],
-            x: [0, petal.drift, 0],
-            rotate: [0, 14, 0],
+            y: [
+              `${petal.start}vh`,
+              `${petal.start + 42}vh`,
+              `${petal.start + 84}vh`,
+              '118vh',
+            ],
+            x: [0, petal.drift, -petal.drift * 0.6, 0],
+            rotate: [0, 140, 280, 360],
           }}
           transition={{
             duration: petal.duration,
             delay: petal.delay,
             repeat: Infinity,
-            ease: 'easeInOut',
+            ease: 'linear',
           }}
         >
           <svg
             width={petal.size}
-            height={petal.size}
-            viewBox="0 0 24 24"
+            height={petal.size * 1.3}
+            viewBox="0 0 24 32"
             fill="none"
           >
             <path
-              d="M12 2c5.5 6 8 11 0 20-8-9-5.5-14 0-20Z"
-              fill="currentColor"
-              fillOpacity="0.22"
-              stroke="currentColor"
-              strokeWidth="0.8"
+              d="M12 2C19 8 21 18 12 30 3 18 5 8 12 2Z"
+              fill={petal.color}
+              fillOpacity={index % 3 === 0 ? 0.72 : 0.55}
+              stroke={petal.color}
+              strokeOpacity="0.5"
+              strokeWidth="0.7"
             />
-            <path d="M12 6v12" stroke="currentColor" strokeWidth="0.6" />
+            <path
+              d="M12 5.5C12.5 12 12.5 20 12 27"
+              stroke="#FFF4E6"
+              strokeOpacity="0.4"
+              strokeWidth="0.7"
+              strokeLinecap="round"
+            />
           </svg>
         </motion.span>
       ))}

@@ -25,23 +25,23 @@ export class ErrorBoundary extends Component<
   render() {
     if (this.state.hasError) {
       return (
-        <main className="grid min-h-[100svh] place-items-center bg-maroon px-6 text-center text-ivory">
-          <div className="max-w-md border border-gold/50 p-8">
+        <main className="grid min-h-[100svh] place-items-center bg-peach px-6 text-center text-burgundy">
+          <div className="max-w-md border border-burgundy/40 bg-cream/90 p-8 shadow-card">
             <p
               lang="ne"
-              className="font-devanagari text-2xl text-gold-light"
+              className="font-devanagari text-2xl text-leaf-deep"
             >
               ॥ शुभ विवाह ॥
             </p>
-            <h1 className="mt-4 font-display text-2xl">A small pause</h1>
-            <p className="mt-3 text-lg text-ivory/75">
-              We could not open the invitation just now. Please refresh the
-              page, or open the link again from your message.
+            <h1 className="mt-4 font-display text-2xl text-burgundy">Something went wrong</h1>
+            <p className="mt-3 text-lg text-brown/85">
+              We could not open this invitation. Refresh the page or open the
+              link from your message again.
             </p>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="mt-6 min-h-11 border border-gold bg-gold px-5 py-3 font-display text-xs uppercase tracking-[0.2em] text-burgundy"
+              className="mt-6 min-h-11 border border-burgundy bg-burgundy px-5 py-3 font-display text-xs uppercase tracking-[0.2em] text-cream transition-colors hover:bg-burgundy-deep"
             >
               Refresh invitation
             </button>

@@ -1,5 +1,3 @@
-import { weddingConfig } from '../config/wedding'
-
 const MAX_GUEST_NAME_LENGTH = 80
 const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F-\u009F]/g
 const WHITESPACE = /\s+/g
@@ -33,19 +31,11 @@ export function normalizeGuestName(
   return truncated || null
 }
 
-export function getGuestName(search?: string): string | null {
-  const searchString =
-    search ?? (typeof window !== 'undefined' ? window.location.search : '')
-
-  try {
-    return normalizeGuestName(new URLSearchParams(searchString).get('to'))
-  } catch {
-    return null
-  }
-}
-
-export function getDisplayGuestName(guestName: string | null | undefined) {
-  return normalizeGuestName(guestName) ?? weddingConfig.messages.genericGuestName
+export function getDisplayGuestName(
+  guestName: string | null | undefined,
+  genericGuestName: string,
+) {
+  return normalizeGuestName(guestName) ?? genericGuestName
 }
 
 export function getSiteBaseUrl(): string {
@@ -73,13 +63,13 @@ export function buildInvitationUrl(
   guestName: string | null | undefined,
   baseUrl = getSiteBaseUrl(),
 ): string {
-  const normalized = normalizeGuestName(guestName)
   const url = new URL(baseUrl)
   url.hash = ''
 
-  if (normalized) {
+  const normalizedGuestName = normalizeGuestName(guestName)
+  if (normalizedGuestName) {
     const params = new URLSearchParams()
-    params.set('to', normalized)
+    params.set('name', normalizedGuestName)
     url.search = params.toString().replace(/\+/g, '%20')
   } else {
     url.search = ''
@@ -90,10 +80,11 @@ export function buildInvitationUrl(
 
 export function getWhatsAppSalutation(
   guestName: string | null | undefined,
+  genericGuestName: string,
 ): string {
   const normalized = normalizeGuestName(guestName)
 
-  if (!normalized) return weddingConfig.messages.genericGuestName
+  if (!normalized) return genericGuestName
   if (/(?:\bji|जी)\s*$/i.test(normalized)) return normalized
 
   return `${normalized} ji`
@@ -102,22 +93,34 @@ export function getWhatsAppSalutation(
 export function buildWhatsAppMessage(
   guestName: string | null | undefined,
   invitationUrl: string,
+  template: string,
+  genericGuestName: string,
 ): string {
-  return weddingConfig.messages.whatsappTemplate
-    .replaceAll('{name}', getWhatsAppSalutation(guestName))
+  return template
+    .replaceAll('{name}', getWhatsAppSalutation(guestName, genericGuestName))
     .replaceAll('{url}', invitationUrl)
 }
 
-export function buildWhatsAppUrl(message: string): string {
-  return `https://wa.me/?text=${encodeURIComponent(message)}`
+export function buildWhatsAppUrl(message: string, phone?: string): string {
+  const digits = phone?.replace(/\D/g, '')
+  const recipient = digits ? `${digits}` : ''
+  return `https://wa.me/${recipient}?text=${encodeURIComponent(message)}`
 }
 
 export function buildShareUrl(
   guestName: string | null | undefined,
-  baseUrl = getSiteBaseUrl(),
+  invitationUrl: string,
+  template: string,
+  genericGuestName: string,
 ): string {
-  const invitationUrl = buildInvitationUrl(guestName, baseUrl)
-  return buildWhatsAppUrl(buildWhatsAppMessage(guestName, invitationUrl))
+  return buildWhatsAppUrl(
+    buildWhatsAppMessage(
+      guestName,
+      invitationUrl,
+      template,
+      genericGuestName,
+    ),
+  )
 }
 
 export function getInitials(name: string): string {

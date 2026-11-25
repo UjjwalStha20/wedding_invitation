@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'framer-motion'
-import { Flame, Flower2, Sun, UtensilsCrossed } from 'lucide-react'
-import { weddingConfig } from '../../config/wedding'
+import { Flame, UtensilsCrossed } from 'lucide-react'
+import { useWeddingConfig } from '../../hooks/useWeddingConfig'
 import { FloatingPetals } from '../decorations/FloatingPetals'
 import { GoldDivider } from '../decorations/GoldDivider'
 import { PaperPattern } from '../decorations/PaperPattern'
@@ -8,9 +8,8 @@ import { SectionTitle } from '../ui/SectionTitle'
 
 export function CenterPanel({ className = '' }: { className?: string }) {
   const reduceMotion = useReducedMotion()
+  const weddingConfig = useWeddingConfig()
   const eventIcons = {
-    mehendi: Flower2,
-    haldi: Sun,
     wedding: Flame,
     reception: UtensilsCrossed,
   }
@@ -18,12 +17,12 @@ export function CenterPanel({ className = '' }: { className?: string }) {
   return (
     <section
       className={`relative bg-ivory overflow-hidden min-h-[400px] py-8 sm:py-12 border-y border-burgundy/30 border-x border-burgundy/20 ${className}`}
-      aria-label="Center panel of inside invitation"
+      aria-label="Center of the invitation"
     >
       <PaperPattern className="text-gold" opacity={0.15} />
       <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6">
         <FloatingPetals className="opacity-50" />
-        <SectionTitle headingId="invitation-heading" nepali="श्री गणेशाय नमः:" title="Shubh Vivah" subtitle="Joyfully invite you to celebrate their wedding" tone="light" />
+        <SectionTitle headingId="invitation-heading" nepali="श्री गणेशाय नमः:" title="Shubh Vivah" subtitle="Please join us to celebrate our wedding." tone="light" />
         <div className="mt-8 space-y-6">
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reduceMotion ? 0 : 0.6 }}>
             <span lang="ne" className="font-devanagari text-base tracking-[0.05em] text-maroon">{weddingConfig.hero.nepali}</span>
@@ -36,7 +35,7 @@ export function CenterPanel({ className = '' }: { className?: string }) {
             {weddingConfig.messages.guestInvitation}
           </motion.p>
           <div className="border rounded-xl bg-maroon-deep p-4 sm:p-6 mb-6">
-            <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">Event Schedule</p>
+            <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">Wedding Events</p>
             <div className="space-y-4">
               {weddingConfig.events.filter((event) => event.enabled).map((event) => {
                 const Icon = eventIcons[event.icon]
@@ -58,16 +57,16 @@ export function CenterPanel({ className = '' }: { className?: string }) {
           </div>
           <div className="border rounded-xl bg-maroon-deep p-4 sm:p-6 mb-6">
             <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">Wedding Ceremony</p>
-            <p className="mt-1 font-body text-base text-maroon">Muhurta: {weddingConfig.date.muhurta}</p>
+            <p className="mt-1 font-body text-base text-maroon">Time: {weddingConfig.date.muhurta}</p>
             <p className="mt-2 font-body text-base text-maroon">{weddingConfig.date.day}, {weddingConfig.date.gregorian}</p>
           </div>
           <div className="border rounded-xl bg-maroon-deep p-4 sm:p-6 mb-6">
-            <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">Reception/Feast</p>
+            <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">Reception</p>
             <p className="mt-1 font-body text-base text-maroon">6:00 PM onwards, {weddingConfig.date.gregorian}</p>
           </div>
           <div className="border rounded-xl bg-maroon-deep p-4 sm:p-6">
-            <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">Family Invitation</p>
-            <p className="mt-2 font-body text-base text-maroon/70">Your gracious presence and blessings will make our celebration truly special.</p>
+            <p className="font-display text-sm uppercase tracking-[0.1em] text-maroon/60 mb-3">From our families</p>
+            <p className="mt-2 font-body text-base text-maroon/70">Please join us and bless our new life together.</p>
           </div>
           <div className="relative mt-8 pt-8 border-t border-burgundy/20">
             <p className="font-display text-sm uppercase tracking-[0.2em] text-maroon/70">Contact</p>

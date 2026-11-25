@@ -1,8 +1,9 @@
 import { motion, useReducedMotion } from 'framer-motion'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { weddingConfig } from '../config/wedding'
+import { useWeddingConfig } from '../hooks/useWeddingConfig'
+import { FloralCorner } from './decorations/FloralCorner'
 import { GaneshMotif } from './decorations/GaneshMotif'
-import { OrnamentalFrame } from './decorations/OrnamentalFrame'
+import { OrnamentalBorder } from './decorations/OrnamentalBorder'
 import { PaperPattern } from './decorations/PaperPattern'
 import { InvitationCover } from './InvitationCover'
 
@@ -14,6 +15,7 @@ const MORPH_DELAY = 850
 const OPEN_DELAY = 2100
 
 export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
+  const weddingConfig = useWeddingConfig()
   const [isOpening, setIsOpening] = useState(false)
   const [morphing, setMorphing] = useState(false)
   const reduceMotion = useReducedMotion()
@@ -106,7 +108,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="envelope-title"
-      className="fixed inset-0 z-50 overflow-hidden bg-transparent text-ivory"
+      className="fixed inset-0 z-50 overflow-hidden bg-peach text-burgundy"
       initial={{ opacity: 1 }}
       exit={
         reduceMotion
@@ -135,14 +137,14 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
           ease: 'easeInOut',
         }}
       >
-        <div className="absolute inset-0 bg-burgundy" />
-        <PaperPattern className="text-gold" opacity={0.14} />
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(20,6,10,0.22)_0%,rgba(53,18,27,0.62)_100%)]" />
-        <OrnamentalFrame />
+        <div className="absolute inset-0 bg-apricot" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,244,230,0.85)_0%,rgba(248,212,165,0.4)_100%)]" />
+        <PaperPattern className="text-burgundy" opacity={0.12} />
+        <OrnamentalBorder tone="burgundy" inset="lg" />
       </motion.div>
 
       <motion.div
-        className="absolute inset-x-0 bottom-0 z-30 h-[48%]"
+        className="absolute inset-x-0 bottom-0 z-30 h-[48%] overflow-hidden"
         aria-hidden="true"
         initial={false}
         animate={isOpening ? { y: '24%', opacity: 0 } : { y: 0, opacity: 1 }}
@@ -153,15 +155,28 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         }}
       >
         <div
-          className="absolute inset-0 bg-[#6c1927]"
+          className="absolute inset-0"
           style={{
             clipPath: 'polygon(0 16%, 50% 0, 100% 16%, 100% 100%, 0 100%)',
           }}
-        />
+        >
+          <div className="absolute inset-0 bg-cream" />
+          <PaperPattern className="text-burgundy" opacity={0.1} />
+          <FloralCorner
+            corner="bottom-left"
+            className="w-[clamp(88px,14vw,168px)]"
+            opacity={0.55}
+          />
+          <FloralCorner
+            corner="bottom-right"
+            className="w-[clamp(88px,14vw,168px)]"
+            opacity={0.55}
+          />
+        </div>
         <svg
           viewBox="0 0 100 48"
           preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full text-gold/55"
+          className="absolute inset-0 h-full w-full text-burgundy/55"
           fill="none"
         >
           <path
@@ -182,27 +197,27 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         <div className="absolute inset-x-0 top-[26%] flex flex-col items-center px-6 text-center">
           <p
             lang="ne"
-            className="font-devanagari text-[clamp(0.95rem,3vw,1.3rem)] tracking-[0.06em] text-gold-light"
+            className="font-devanagari text-[clamp(0.95rem,3vw,1.3rem)] tracking-[0.06em] text-leaf-deep"
           >
             {hero.nepali}
           </p>
-          <p className="mt-2 font-display text-[clamp(1.5rem,5.4vw,2.4rem)] leading-tight tracking-[0.04em] text-ivory">
+          <p className="mt-2 font-script text-[clamp(1.9rem,6vw,2.9rem)] leading-tight text-burgundy">
             {groom.name.split(' ')[0]}
-            <span className="mx-2 font-body italic text-gold">&</span>
+            <span className="mx-2 font-body text-blush">&amp;</span>
             {bride.name.split(' ')[0]}
           </p>
           <p
             lang="ne"
-            className="mt-1.5 font-devanagari text-sm text-ivory/60"
+            className="mt-1.5 font-devanagari text-sm text-burgundy/65"
           >
             {date.bsNepali}
           </p>
-          <p className="mt-0.5 font-body text-sm italic text-ivory/50">
+          <p className="mt-0.5 font-body text-sm italic text-brown/70">
             {date.gregorian}
           </p>
         </div>
 
-        <p className="absolute inset-x-0 bottom-[max(1.1rem,env(safe-area-inset-bottom))] px-6 text-center font-display text-[0.56rem] uppercase tracking-[0.24em] text-gold/75">
+        <p className="absolute inset-x-0 bottom-[max(1.1rem,env(safe-area-inset-bottom))] px-6 text-center font-display text-[0.56rem] uppercase tracking-[0.24em] text-burgundy/70">
           {isOpening ? 'Opening…' : 'Tap anywhere to open'}
         </p>
       </motion.div>
@@ -220,13 +235,16 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         style={{ transformPerspective: 1600 }}
       >
         <div
-          className="absolute inset-0 bg-[#5b1523]"
+          className="absolute inset-0"
           style={{ clipPath: 'polygon(0 0, 100% 0, 50% 100%)' }}
-        />
+        >
+          <div className="absolute inset-0 bg-burgundy" />
+          <PaperPattern className="text-cream" opacity={0.14} />
+        </div>
         <svg
           viewBox="0 0 100 58"
           preserveAspectRatio="none"
-          className="absolute inset-0 h-full w-full text-gold/55"
+          className="absolute inset-0 h-full w-full text-blush/55"
           fill="none"
         >
           <path
@@ -247,11 +265,11 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         <div className="absolute inset-x-0 top-[14%] px-6 text-center">
           <p
             lang="sa"
-            className="font-devanagari text-[clamp(0.85rem,2.6vw,1.15rem)] tracking-[0.08em] text-gold-light/90"
+            className="font-devanagari text-[clamp(0.85rem,2.6vw,1.15rem)] tracking-[0.08em] text-cream/90"
           >
             {hero.sanskrit}
           </p>
-          <p className="eyebrow mt-2 text-gold/55">{hero.english}</p>
+          <p className="eyebrow mt-2 text-blush/80">{hero.english}</p>
         </div>
       </motion.div>
 
@@ -266,7 +284,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
           }
         >
           <motion.span
-            className="absolute inset-0 rounded-full border border-gold/40"
+            className="absolute inset-0 rounded-full border border-burgundy/35"
             animate={
               reduceMotion ? undefined : { scale: [1, 1.35], opacity: [0.5, 0] }
             }
@@ -276,13 +294,13 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
                 : { duration: 2.2, repeat: Infinity, ease: 'easeOut' }
             }
           />
-          <div className="relative grid h-20 w-20 place-items-center rounded-full border border-gold-light/80 bg-maroon shadow-[0_10px_30px_rgba(0,0,0,0.5)] sm:h-28 sm:w-28">
-            <div className="absolute inset-[7%] rounded-full border border-gold/50" />
+          <div className="relative grid h-20 w-20 place-items-center rounded-full border border-blush/70 bg-burgundy shadow-[0_10px_30px_rgba(110,12,16,0.4)] sm:h-28 sm:w-28">
+            <div className="absolute inset-[7%] rounded-full border border-cream/40" />
             <motion.div
               layoutId="ganesh-morph"
               className="relative aspect-[13/15] w-[58%]"
             >
-              <GaneshMotif className="h-full w-full" />
+              <GaneshMotif tone="cream" className="h-full w-full" />
             </motion.div>
           </div>
         </motion.div>
@@ -295,9 +313,8 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         disabled={isOpening}
         aria-label="Open wedding invitation"
         aria-busy={isOpening}
-        className="absolute inset-0 z-50 cursor-pointer select-none bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold disabled:cursor-wait"
+        className="absolute inset-0 z-50 cursor-pointer select-none bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-burgundy disabled:cursor-wait"
       />
-
     </motion.div>
   )
 }

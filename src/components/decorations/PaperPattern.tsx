@@ -7,7 +7,7 @@ interface PaperPatternProps {
 
 export function PaperPattern({
   className = '',
-  opacity = 0.22,
+  opacity = 0.16,
 }: PaperPatternProps) {
   const patternId = useId().replaceAll(':', '')
 
@@ -20,27 +20,30 @@ export function PaperPattern({
       <defs>
         <pattern
           id={patternId}
-          width="160"
-          height="160"
+          width="140"
+          height="140"
           patternUnits="userSpaceOnUse"
         >
           <g
             fill="none"
             stroke="currentColor"
-            strokeWidth="0.65"
+            strokeWidth="0.6"
+            strokeLinecap="round"
             opacity={opacity}
           >
-            <path d="M80 54c8.5 10 8.5 18 0 28-8.5-10-8.5-18 0-28Z" />
-            <path d="M80 78c8.5 10 8.5 18 0 28-8.5-10-8.5-18 0-28Z" />
-            <path d="M54 80c10-8.5 18-8.5 28 0-10 8.5-18 8.5-28 0Z" />
-            <path d="M78 80c10-8.5 18-8.5 28 0-10 8.5-18 8.5-28 0Z" />
-            <circle cx="80" cy="80" r="2.2" />
-            <path d="M80 42v10M80 108v10M42 80h10M108 80h10" />
-            <path d="M0 0l8 8M160 0l-8 8M0 160l8-8M160 160l-8-8" />
-            <circle cx="0" cy="80" r="1.5" />
-            <circle cx="160" cy="80" r="1.5" />
-            <circle cx="80" cy="0" r="1.5" />
-            <circle cx="80" cy="160" r="1.5" />
+            <path d="M18 118C36 92 58 74 92 60c14-6 24-14 32-26" />
+            <path d="M44 98c-10-2-16-8-18-18 10 2 16 8 18 18Z" />
+            <path d="M62 82c2-10 8-16 18-18-2 10-8 16-18 18Z" />
+            <path d="M80 70c-8-4-12-10-12-20 9 4 13 10 12 20Z" />
+            <path d="M98 60c2-9 8-14 17-15-2 9-8 14-17 15Z" />
+            <path d="M70 52c5-5 11-6 17-3-5 5-11 6-17 3Z" />
+            <circle cx="70" cy="52" r="2.1" />
+            <circle cx="108" cy="44" r="1.5" />
+            <path d="M20 26c6-4 12-4 18 0-6 4-12 4-18 0Z" />
+            <path d="M29 26c3-5 8-7 13-5-3 5-8 7-13 5Z" />
+            <circle cx="29" cy="26" r="1.6" />
+            <path d="M118 108c-4 6-4 12 0 18" opacity="0.7" />
+            <circle cx="118" cy="108" r="1.4" />
           </g>
         </pattern>
       </defs>

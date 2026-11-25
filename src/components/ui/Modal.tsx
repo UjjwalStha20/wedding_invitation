@@ -112,7 +112,7 @@ export function Modal({
     <AnimatePresence>
       {open ? (
         <motion.div
-          className="fixed inset-0 z-[90] flex items-end justify-center overflow-y-auto bg-burgundy/85 p-3 sm:items-center sm:p-6"
+          className="fixed inset-0 z-[90] flex items-end justify-center overflow-y-auto bg-burgundy/80 p-3 sm:items-center sm:p-6"
           initial={reduceMotion ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -127,7 +127,7 @@ export function Modal({
             aria-modal="true"
             aria-labelledby={titleId}
             tabIndex={-1}
-            className={`relative my-auto w-full max-w-[580px] border border-gold/70 bg-ivory shadow-luxe outline-none ${className}`}
+            className={`relative my-auto w-full max-w-[580px] border border-burgundy/40 bg-cream shadow-luxe outline-none ${className}`}
             initial={reduceMotion ? false : { opacity: 0, y: 24, scale: 0.985 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 16 }}
@@ -136,7 +136,7 @@ export function Modal({
             <button
               type="button"
               onClick={onClose}
-              className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center border border-transparent text-gold transition-colors hover:border-gold/40 hover:bg-gold/10"
+              className="absolute right-3 top-3 z-10 grid h-10 w-10 place-items-center border border-transparent text-burgundy transition-colors hover:border-burgundy/30 hover:bg-burgundy/10"
               aria-label="Close dialog"
             >
               <X className="h-4 w-4" aria-hidden="true" />

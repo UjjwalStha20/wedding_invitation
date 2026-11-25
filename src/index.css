@@ -41,25 +41,40 @@
 }
 
 @theme {
-  --color-maroon: #721c2c;
-  --color-maroon-deep: #5b1523;
-  --color-royal: #8b1e2d;
-  --color-burgundy: #35121b;
-  --color-gold: #c6a15b;
-  --color-gold-light: #e8d5a7;
-  --color-gold-soft: #dbc08a;
-  --color-gold-deep: #9c7838;
-  --color-ivory: #fff5e5;
-  --color-ivory-deep: #f5e6ca;
-  --color-ivory-soft: #fbf2e2;
-  --color-ink: #2a1418;
+  /* Traditional Nepali floral wedding palette */
+  --color-peach: #ffe0ad;
+  --color-cream: #ffebd8;
+  --color-apricot: #f8d4a5;
+  --color-burgundy: #8f1116;
+  --color-burgundy-deep: #6e0c10;
+  --color-rose: #b52b35;
+  --color-blush: #e9a5a1;
+  --color-leaf: #718b50;
+  --color-leaf-deep: #4f6636;
+  --color-brown: #75513c;
+  --color-violet: #7545b9;
+  --color-ivory: #ffebd8;
+  --color-ivory-soft: #fff4e6;
+  --color-ivory-deep: #f8d4a5;
+  --color-ink: #4a241b;
 
-  --font-display: 'Cinzel', 'Cormorant Garamond', Georgia, serif;
-  --font-body: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-devanagari: 'Tiro Devanagari Hindi', 'Noto Serif Devanagari', serif;
+  /* Legacy aliases kept so existing utilities stay in-palette */
+  --color-maroon: #8f1116;
+  --color-maroon-deep: #6e0c10;
+  --color-royal: #b52b35;
+  --color-gold: #a9763f;
+  --color-gold-light: #e7c89c;
+  --color-gold-soft: #d9b98c;
+  --color-gold-deep: #7a5226;
 
-  --shadow-luxe: 0 30px 80px -36px rgba(53, 18, 27, 0.65);
-  --shadow-card: 0 24px 60px -32px rgba(53, 18, 27, 0.5);
+  --font-display: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Lora', 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-script: 'Great Vibes', 'Cormorant Garamond', cursive;
+  --font-devanagari: 'Noto Serif Devanagari', 'Tiro Devanagari Hindi', serif;
+
+  --shadow-luxe: 0 34px 90px -40px rgba(110, 12, 16, 0.55);
+  --shadow-card: 0 24px 60px -34px rgba(110, 12, 16, 0.45);
+  --shadow-soft: 0 18px 44px -28px rgba(117, 81, 60, 0.5);
 
   --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -74,11 +89,18 @@
   body {
     margin: 0;
     min-width: 320px;
-    background-color: var(--color-ivory);
-    color: var(--color-burgundy);
+    background-color: var(--color-peach);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E"),
+      radial-gradient(1200px 820px at 12% 6%, rgba(255, 244, 230, 0.95), transparent 62%),
+      radial-gradient(1000px 760px at 90% 16%, rgba(248, 212, 165, 0.85), transparent 58%),
+      radial-gradient(1100px 900px at 50% 104%, rgba(233, 165, 161, 0.24), transparent 62%);
+    background-size: 160px 160px, auto, auto, auto;
+    background-attachment: fixed;
+    color: var(--color-ink);
     font-family: var(--font-body);
     font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.2rem);
-    line-height: 1.65;
+    line-height: 1.68;
     font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
@@ -91,7 +113,7 @@
   h4 {
     font-family: var(--font-display);
     font-weight: 500;
-    line-height: 1.18;
+    line-height: 1.16;
     text-wrap: balance;
   }
 
@@ -114,12 +136,12 @@
   }
 
   ::selection {
-    background: rgba(198, 161, 91, 0.35);
-    color: var(--color-burgundy);
+    background: rgba(181, 43, 53, 0.22);
+    color: var(--color-burgundy-deep);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-burgundy);
     outline-offset: 3px;
   }
 
@@ -158,9 +180,9 @@
     left: 0.75rem;
     z-index: 100;
     transform: translateY(-160%);
-    border: 1px solid var(--color-gold);
-    background: var(--color-ivory);
-    color: var(--color-burgundy);
+    border: 1px solid var(--color-burgundy);
+    background: var(--color-cream);
+    color: var(--color-burgundy-deep);
     padding: 0.75rem 1rem;
     font-family: var(--font-display);
     font-size: 0.75rem;
@@ -182,7 +204,18 @@
   }
 
   .cursive {
-    font-family: 'Cormorant Garamond', cursive, Georgia, serif;
-    font-style: italic;
+    font-family: var(--font-script);
+    font-style: normal;
+  }
+
+  .font-script {
+    font-family: var(--font-script);
+    font-style: normal;
+  }
+
+  .paper-wash {
+    background-image:
+      radial-gradient(120% 90% at 50% 0%, rgba(255, 244, 230, 0.9) 0%, transparent 58%),
+      radial-gradient(100% 80% at 50% 100%, rgba(248, 212, 165, 0.55) 0%, transparent 62%);
   }
 }

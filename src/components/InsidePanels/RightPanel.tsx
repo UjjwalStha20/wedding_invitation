@@ -5,7 +5,7 @@ export function RightPanel({ className = '' }: { className?: string }) {
   return (
     <section
       className={`relative bg-ivory overflow-hidden min-h-[400px] py-8 sm:py-12 border-y border-burgundy/30 ${className}`}
-      aria-label="Right panel of inside invitation"
+      aria-label="Right side of the invitation"
     >
       <PaperPattern className="text-gold" opacity={0.15} />
 
@@ -44,7 +44,7 @@ export function RightPanel({ className = '' }: { className?: string }) {
             </svg>
           </div>
           <p className="font-display text-[clamp(1.5rem,4vw,2.2rem)] leading-tight tracking-[0.03em] text-maroon">
-            <span className="cursive">Phumu</span>
+            <span className="cursive">Prumu</span>
           </p>
           <p lang="ne" className="mt-1 font-devanagari text-lg text-maroon/70">
             प्रुम

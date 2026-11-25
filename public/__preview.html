@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <body style="margin:0;overflow:hidden;background:#FFE0AD">
+    <iframe id="f" src="/" style="border:0;width:100vw;height:100vh"></iframe>
+    <script>
+      const params = new URLSearchParams(location.search);
+      const section = params.get('section');
+      const frame = document.getElementById('f');
+      frame.addEventListener('load', () => {
+        setTimeout(() => {
+          const doc = frame.contentDocument;
+          if (!doc) return;
+          if (section && section !== 'top') {
+            doc.getElementById(section)?.scrollIntoView({ block: 'start' });
+          } else {
+            frame.contentWindow.scrollTo(0, 0);
+          }
+        }, 1500);
+      });
+    </script>
+  </body>
+</html>
