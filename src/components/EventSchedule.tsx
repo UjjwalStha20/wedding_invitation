@@ -125,14 +125,43 @@ export function EventSchedule() {
                           />
                           {event.time}
                         </span>
-                        <span className="inline-flex items-center gap-1.5">
-                          <MapPin
-                            className="h-3.5 w-3.5 text-rose"
-                            strokeWidth={1.6}
-                            aria-hidden="true"
-                          />
-                          {event.venue}
-                        </span>
+                        {event.id === 'wedding' ? (
+                          <>
+                            <a
+                              href="https://maps.app.goo.gl/R47wHNB7HfFymFsV8"
+                              target="_blank"
+                              rel="noreferrer"
+                              aria-label="Open Balkhu, Kathmandu in Google Maps"
+                              className="inline-flex min-w-0 items-center gap-1.5 text-brown/80 underline decoration-burgundy/30 underline-offset-2 hover:text-burgundy"
+                            >
+                              <MapPin
+                                className="h-3.5 w-3.5 shrink-0 text-rose"
+                                strokeWidth={1.6}
+                                aria-hidden="true"
+                              />
+                              Balkhu, Kathmandu
+                            </a>
+                            <span aria-hidden="true">→</span>
+                            <a
+                              href="https://google.com/maps/place/himalayan+durbar+hetauda/data=!4m2!3m1!1s0x39eb490051e041b3:0xe3a7e8e47d0e6789?sa=X&ved=1t:242&ictx=111"
+                              target="_blank"
+                              rel="noreferrer"
+                              aria-label="Open Himalayan Durbar Banquet, Hetauda in Google Maps"
+                              className="inline-flex min-w-0 items-center text-brown/80 underline decoration-burgundy/30 underline-offset-2 hover:text-burgundy"
+                            >
+                              Himalayan Durbar Banquet, Hetauda
+                            </a>
+                          </>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5">
+                            <MapPin
+                              className="h-3.5 w-3.5 shrink-0 text-rose"
+                              strokeWidth={1.6}
+                              aria-hidden="true"
+                            />
+                            {event.venue}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

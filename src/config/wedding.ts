@@ -150,8 +150,8 @@ export const weddingConfig: WeddingConfig = {
       gregorianDate: 'Sunday, 6 December 2026',
       isoDate: '2026-12-06',
       time: 'Muhurta 10:45 AM – 12:30 PM',
-      venue: 'Aagantuk Resort, Dhulikhel',
-      address: 'Dhulikhel, Nepal',
+      venue: 'Balkhu, Kathmandu → Himalayan Durbar Banquet, Hetauda',
+      address: 'Balkhu, Kathmandu to Himalayan Durbar Banquet, Hetauda',
       description:
         'Join us for the wedding ceremony, with Vedic rituals, family blessings, and shehnai music.',
       icon: 'wedding',
@@ -165,7 +165,7 @@ export const weddingConfig: WeddingConfig = {
       dateNepali: '२२ मंसिर २०८३',
       gregorianDate: 'Tuesday, 8 December 2026',
       isoDate: '2026-12-08',
-      time: 'From 6:00 PM',
+      time: '3:00 PM – 8:00 PM',
       venue: 'Aagantuk Resort, Dhulikhel',
       address: 'Dhulikhel, Nepal',
       description:
