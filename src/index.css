@@ -81,8 +81,8 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     scroll-padding-top: 1.5rem;
+    scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -96,7 +96,6 @@
       radial-gradient(1000px 760px at 90% 16%, rgba(248, 212, 165, 0.85), transparent 58%),
       radial-gradient(1100px 900px at 50% 104%, rgba(233, 165, 161, 0.24), transparent 62%);
     background-size: 160px 160px, auto, auto, auto;
-    background-attachment: fixed;
     color: var(--color-ink);
     font-family: var(--font-body);
     font-size: clamp(1.0625rem, 0.98rem + 0.35vw, 1.2rem);

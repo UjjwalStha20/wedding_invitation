@@ -114,15 +114,6 @@ export function ClosingSection() {
             {groomFirst} &amp; {brideFirst} · {date.bs}
           </p>
         </Reveal>
-
-        <footer className="safe-bottom mt-9 border-t border-burgundy/15 pt-5 text-center">
-          <p className="font-body text-sm italic text-brown/60">
-            {couple.groom.name} &amp; {couple.bride.name} · Dhulikhel, Nepal
-          </p>
-          <p className="mt-1 font-display text-[0.52rem] uppercase tracking-[0.24em] text-brown/45">
-            With love and blessings
-          </p>
-        </footer>
       </div>
     </section>
   )

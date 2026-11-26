@@ -9,6 +9,10 @@ import { weddingConfig } from './config/wedding'
 import { useGuestName } from './hooks/useGuestName'
 import { applyWeddingSeo } from './utils/seo'
 
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
+}
+
 function InvitationExperience({ guestName }: { guestName: string | null }) {
   const [opened, setOpened] = useState(false)
   const toast = useState<ToastMessage | null>(null)[0]
@@ -20,7 +24,18 @@ function InvitationExperience({ guestName }: { guestName: string | null }) {
 
   useEffect(() => {
     if (!opened) {
-      window.scrollTo({ top: 0, behavior: 'auto' })
+      window.scrollTo(0, 0)
+    }
+  }, [opened])
+
+  useEffect(() => {
+    if (opened) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousOverflow
     }
   }, [opened])
 
@@ -44,7 +59,7 @@ function InvitationExperience({ guestName }: { guestName: string | null }) {
   }, [opened])
 
   const handleOpen = useCallback(() => {
-    window.scrollTo({ top: 0, behavior: 'auto' })
+    window.scrollTo(0, 0)
     setOpened(true)
   }, [])
 
