@@ -127,7 +127,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       </div>
 
       <motion.div
-        className="absolute inset-0 z-20"
+        className="absolute inset-0 z-20 [will-change:opacity]"
         aria-hidden="true"
         initial={false}
         animate={isOpening ? { opacity: 0 } : { opacity: 1 }}
@@ -144,7 +144,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       </motion.div>
 
       <motion.div
-        className="absolute inset-x-0 bottom-0 z-30 h-[48%] overflow-hidden"
+        className="absolute inset-x-0 bottom-0 z-30 h-[48%] overflow-hidden [will-change:transform,opacity]"
         aria-hidden="true"
         initial={false}
         animate={isOpening ? { y: '24%', opacity: 0 } : { y: 0, opacity: 1 }}
@@ -223,7 +223,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       </motion.div>
 
       <motion.div
-        className="absolute inset-x-0 top-0 z-30 h-[58%] origin-top [backface-visibility:hidden] [transform-style:preserve-3d]"
+        className="absolute inset-x-0 top-0 z-30 h-[58%] origin-top [backface-visibility:hidden] [transform-style:preserve-3d] [will-change:transform]"
         aria-hidden="true"
         initial={false}
         animate={isOpening ? { rotateX: -178 } : { rotateX: 0 }}
@@ -275,7 +275,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
 
       {!morphing ? (
         <motion.div
-          className="absolute left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2"
+          className="absolute left-1/2 top-1/2 z-40 -translate-x-1/2 -translate-y-1/2 [will-change:transform]"
           aria-hidden="true"
           initial={false}
           animate={isOpening ? { scale: [1, 1.06, 1] } : { scale: 1 }}
@@ -283,16 +283,8 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
             isOpening ? { duration: 0.8, ease: 'easeInOut' } : undefined
           }
         >
-          <motion.span
-            className="absolute inset-0 rounded-full border border-burgundy/35"
-            animate={
-              reduceMotion ? undefined : { scale: [1, 1.35], opacity: [0.5, 0] }
-            }
-            transition={
-              reduceMotion
-                ? undefined
-                : { duration: 2.2, repeat: Infinity, ease: 'easeOut' }
-            }
+          <span
+            className={`absolute inset-0 rounded-full border border-burgundy/35 ${reduceMotion ? '' : 'animate-seal-pulse'}`}
           />
           <div className="relative grid h-20 w-20 place-items-center rounded-full border border-blush/70 bg-burgundy shadow-[0_10px_30px_rgba(110,12,16,0.4)] sm:h-28 sm:w-28">
             <div className="absolute inset-[7%] rounded-full border border-cream/40" />

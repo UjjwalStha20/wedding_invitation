@@ -22,6 +22,7 @@ function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
   const weddingConfig = useWeddingConfig()
   const { groom, bride } = weddingConfig.couple
   const label = photo.caption ?? photo.alt
+  const contain = photo.fit === 'contain'
 
   return (
     <Reveal delay={index * 0.05}>
@@ -32,7 +33,9 @@ function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
         className="group relative block w-full cursor-pointer text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-burgundy"
       >
         <div className="relative border border-burgundy/40 bg-cream p-1.5 shadow-card transition-colors duration-500 group-hover:border-burgundy">
-          <div className="relative overflow-hidden border border-blush/60">
+          <div
+            className={`relative overflow-hidden border border-blush/60 ${contain ? 'bg-cream' : ''}`}
+          >
             {failed ? (
               <div className="grid aspect-[4/5] w-full place-items-center bg-burgundy-deep">
                 <Monogram
@@ -48,7 +51,7 @@ function PhotoTile({ photo, index, onOpen }: PhotoTileProps) {
                 loading="lazy"
                 decoding="async"
                 onError={() => setFailed(true)}
-                className="aspect-[4/5] w-full object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                className={`aspect-[4/5] w-full transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] ${contain ? 'object-contain' : 'object-cover'}`}
               />
             )}
 

@@ -10,21 +10,12 @@ import { useGuestName } from './hooks/useGuestName'
 import { applyWeddingSeo } from './utils/seo'
 
 function InvitationExperience({ guestName }: { guestName: string | null }) {
-  const [opened, setOpened] = useState(true)
+  const [opened, setOpened] = useState(false)
   const toast = useState<ToastMessage | null>(null)[0]
   const mainRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
     applyWeddingSeo(weddingConfig)
-  }, [])
-
-  useEffect(() => {
-    const id = window.location.hash.slice(1)
-    if (!id) return
-    const timer = window.setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ block: 'start' })
-    }, 600)
-    return () => window.clearTimeout(timer)
   }, [])
 
   useEffect(() => {

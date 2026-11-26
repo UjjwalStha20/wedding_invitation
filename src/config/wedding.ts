@@ -7,6 +7,7 @@ export interface Photo {
 
 export interface GalleryPhoto extends Photo {
   caption?: string
+  fit?: 'cover' | 'contain'
 }
 
 export interface Person {
@@ -200,34 +201,37 @@ export const weddingConfig: WeddingConfig = {
     // couple: { src: '/images/couple.jpg', alt: 'Rakesh and Prumu' },
     gallery: [
       {
-        src: '/images/gallery/moment-1.svg',
-        alt: 'Illustration of a Nepali wedding celebration',
-        caption: 'Our story begins',
+        src: '/images/gallery/moment-1.jpg',
+        alt: 'Rakesh and Prumu with friends in an early photograph',
+        caption: 'Where It All Began ❤️',
       },
       {
-        src: '/images/gallery/moment-2.svg',
-        alt: 'Illustration of a Nepali wedding celebration',
-        caption: 'Blessings from our families',
+        src: '/images/gallery/moment-2.jpg',
+        alt: 'Rakesh and Prumu together on a quiet road',
+        caption: 'A Journey of Two Hearts',
       },
       {
-        src: '/images/gallery/moment-3.svg',
-        alt: 'Illustration of a Nepali wedding celebration',
-        caption: 'Celebrating with family and friends',
+        src: '/images/gallery/moment-3.jpg',
+        alt: 'Rakesh and Prumu smiling in front of the mountains',
+        caption: 'Adventures Hand in Hand',
       },
       {
-        src: '/images/gallery/moment-4.svg',
-        alt: 'Illustration of a Nepali wedding celebration',
-        caption: 'A joyful family celebration',
+        src: '/images/gallery/moment-4.jpg',
+        alt: 'Rakesh and Prumu dancing together at their wedding',
+        caption: 'Dancing Into Forever',
+        fit: 'contain',
       },
       {
-        src: '/images/gallery/moment-5.svg',
-        alt: 'Illustration of a Nepali wedding celebration',
-        caption: 'Under the temple arch',
+        src: '/images/gallery/moment-5.jpg',
+        alt: 'Rakesh and Prumu exchanging garlands during the wedding ceremony',
+        caption: 'The Promise of Forever',
+        fit: 'contain',
       },
       {
-        src: '/images/gallery/moment-6.svg',
-        alt: 'Illustration of a Nepali wedding celebration',
-        caption: 'A promise for life',
+        src: '/images/gallery/moment-6.jpg',
+        alt: 'Rakesh and Prumu surrounded by their families at the wedding',
+        caption: 'Blessings from Our Families',
+        fit: 'contain',
       },
     ],
   },

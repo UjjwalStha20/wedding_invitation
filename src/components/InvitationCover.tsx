@@ -98,10 +98,12 @@ export function InvitationCover({
             transition={{
               layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
             }}
-            style={{ opacity: ganeshVisible ? 1 : 0 }}
+            style={{ opacity: ganeshVisible ? 1 : 0, willChange: 'transform' }}
             className="relative aspect-[13/15] w-full"
           >
-            <GaneshMotif className="h-full w-full drop-shadow-[0_8px_18px_rgba(143,17,22,0.12)]" />
+            <GaneshMotif
+              className={`h-full w-full ${ganeshLayoutId ? '' : 'drop-shadow-[0_8px_18px_rgba(143,17,22,0.12)]'}`}
+            />
           </motion.div>
         </div>
 
@@ -154,20 +156,9 @@ export function InvitationCover({
               <span className="font-display text-[0.56rem] uppercase tracking-[0.3em]">
                 Scroll down
               </span>
-              <motion.span
-                animate={
-                  reduceMotion
-                    ? undefined
-                    : { y: [0, 5, 0], opacity: [0.55, 1, 0.55] }
-                }
-                transition={
-                  reduceMotion
-                    ? undefined
-                    : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
-                }
-              >
+              <span className={reduceMotion ? undefined : 'animate-gentle-bob'}>
                 <ChevronDown className="h-4 w-4" aria-hidden="true" />
-              </motion.span>
+              </span>
             </div>
           ) : null}
         </motion.div>

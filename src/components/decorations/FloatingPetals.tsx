@@ -1,4 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion'
+import { useReducedMotion } from 'framer-motion'
+import type { CSSProperties } from 'react'
 
 interface FloatingPetalsProps {
   className?: string
@@ -27,52 +28,47 @@ export function FloatingPetals({ className = '' }: FloatingPetalsProps) {
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
       aria-hidden="true"
     >
-      {petals.map((petal, index) => (
-        <motion.span
-          key={`${petal.left}-${petal.start}`}
-          className="absolute top-0"
-          style={{ left: petal.left, opacity: petal.opacity }}
-          animate={{
-            y: [
-              `${petal.start}vh`,
-              `${petal.start + 42}vh`,
-              `${petal.start + 84}vh`,
-              '118vh',
-            ],
-            x: [0, petal.drift, -petal.drift * 0.6, 0],
-            rotate: [0, 140, 280, 360],
-          }}
-          transition={{
-            duration: petal.duration,
-            delay: petal.delay,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        >
-          <svg
-            width={petal.size}
-            height={petal.size * 1.3}
-            viewBox="0 0 24 32"
-            fill="none"
+      {petals.map((petal, index) => {
+        const style = {
+          left: petal.left,
+          opacity: petal.opacity,
+          '--petal-start': `${petal.start}vh`,
+          '--petal-drift': `${petal.drift}px`,
+          '--petal-duration': `${petal.duration}s`,
+          '--petal-delay': `${petal.delay}s`,
+        } as CSSProperties
+
+        return (
+          <span
+            key={`${petal.left}-${petal.start}`}
+            className="animate-petal-fall absolute top-0"
+            style={style}
           >
-            <path
-              d="M12 2C19 8 21 18 12 30 3 18 5 8 12 2Z"
-              fill={petal.color}
-              fillOpacity={index % 3 === 0 ? 0.72 : 0.55}
-              stroke={petal.color}
-              strokeOpacity="0.5"
-              strokeWidth="0.7"
-            />
-            <path
-              d="M12 5.5C12.5 12 12.5 20 12 27"
-              stroke="#FFF4E6"
-              strokeOpacity="0.4"
-              strokeWidth="0.7"
-              strokeLinecap="round"
-            />
-          </svg>
-        </motion.span>
-      ))}
+            <svg
+              width={petal.size}
+              height={petal.size * 1.3}
+              viewBox="0 0 24 32"
+              fill="none"
+            >
+              <path
+                d="M12 2C19 8 21 18 12 30 3 18 5 8 12 2Z"
+                fill={petal.color}
+                fillOpacity={index % 3 === 0 ? 0.72 : 0.55}
+                stroke={petal.color}
+                strokeOpacity="0.5"
+                strokeWidth="0.7"
+              />
+              <path
+                d="M12 5.5C12.5 12 12.5 20 12 27"
+                stroke="#FFF4E6"
+                strokeOpacity="0.4"
+                strokeWidth="0.7"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+        )
+      })}
     </div>
   )
 }
