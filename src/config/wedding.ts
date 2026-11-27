@@ -191,7 +191,7 @@ export const weddingConfig: WeddingConfig = {
   messages: {
     guestInvitation:
       'Please join us and bless our new life together.',
-    genericGuestName: 'Family and Friends',
+    genericGuestName: 'You are invited',
     closing:
       'Your presence and blessings will make our day special.',
     closingSalutation: 'With love,',

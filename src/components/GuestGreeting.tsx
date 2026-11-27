@@ -72,7 +72,7 @@ export function GuestGreeting({ guestName }: GuestGreetingProps) {
               },
             }}
           >
-            Dear
+            With Love
           </motion.span>
           <motion.span
             className="mt-1 max-w-full break-words px-1 font-display text-[clamp(1.95rem,6vw,3.35rem)] tracking-[0.02em] text-burgundy [overflow-wrap:anywhere]"
