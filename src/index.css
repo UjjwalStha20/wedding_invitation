@@ -82,7 +82,6 @@
 @layer base {
   html {
     scroll-padding-top: 1.5rem;
-    scrollbar-gutter: stable;
     -webkit-text-size-adjust: 100%;
   }
 

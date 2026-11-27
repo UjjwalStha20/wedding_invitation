@@ -96,7 +96,10 @@ export function InvitationCover({
           <motion.div
             layoutId={ganeshLayoutId}
             transition={{
-              layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+              layout: {
+                duration: reduceMotion ? 0 : 0.9,
+                ease: [0.22, 1, 0.36, 1],
+              },
             }}
             style={{ opacity: ganeshVisible ? 1 : 0, willChange: 'transform' }}
             className="relative aspect-[13/15] w-full"

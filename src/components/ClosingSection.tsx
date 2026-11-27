@@ -108,7 +108,7 @@ export function ClosingSection() {
             lang="ne"
             className="mt-6 font-devanagari text-[clamp(2rem,6vw,3.2rem)] leading-[1.4] text-burgundy"
           >
-            ॥ शुभ विवाह ॥
+            {weddingConfig.hero.nepali}
           </h2>
           <p className="mt-3 font-display text-[0.65rem] uppercase tracking-[0.28em] text-brown/70">
             {groomFirst} &amp; {brideFirst} · {date.bs}

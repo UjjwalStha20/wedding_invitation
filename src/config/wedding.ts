@@ -62,6 +62,7 @@ export interface Family {
 }
 
 export interface WeddingConfig {
+  invitationType: 'wedding' | 'reception'
   couple: {
     groom: Person
     bride: Person
@@ -98,6 +99,7 @@ export interface WeddingConfig {
 }
 
 export const weddingConfig: WeddingConfig = {
+  invitationType: 'wedding',
   couple: {
     groom: {
       name: 'Rakesh Shrestha',

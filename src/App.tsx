@@ -5,7 +5,9 @@ import { InvitationLinkGeneratorPage } from './components/InvitationLinkGenerato
 import { InvitationPage } from './components/InvitationPage'
 import { ErrorBoundary } from './components/ui/ErrorBoundary'
 import { Toast, type ToastMessage } from './components/ui/Toast'
+import { receptionConfig } from './config/reception'
 import { weddingConfig } from './config/wedding'
+import { WeddingConfigProvider } from './hooks/useWeddingConfig'
 import { useGuestName } from './hooks/useGuestName'
 import { applyWeddingSeo } from './utils/seo'
 
@@ -13,14 +15,24 @@ if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual'
 }
 
-function InvitationExperience({ guestName }: { guestName: string | null }) {
+interface InvitationExperienceProps {
+  guestName: string | null
+  canonicalPath: string
+  config: typeof weddingConfig
+}
+
+function InvitationExperience({
+  guestName,
+  canonicalPath,
+  config,
+}: InvitationExperienceProps) {
   const [opened, setOpened] = useState(false)
   const toast = useState<ToastMessage | null>(null)[0]
   const mainRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    applyWeddingSeo(weddingConfig)
-  }, [])
+    applyWeddingSeo(config, canonicalPath)
+  }, [canonicalPath, config])
 
   useEffect(() => {
     if (!opened) {
@@ -31,11 +43,17 @@ function InvitationExperience({ guestName }: { guestName: string | null }) {
   useEffect(() => {
     if (opened) return
 
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
+    const root = document.documentElement
+    const body = document.body
+    const rootOverflow = root.style.overflow
+    const bodyOverflow = body.style.overflow
+
+    root.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
 
     return () => {
-      document.body.style.overflow = previousOverflow
+      root.style.overflow = rootOverflow
+      body.style.overflow = bodyOverflow
     }
   }, [opened])
 
@@ -50,16 +68,7 @@ function InvitationExperience({ guestName }: { guestName: string | null }) {
     }
   }, [opened])
 
-  useEffect(() => {
-    if (!opened) return
-    const focusTimer = window.setTimeout(() => {
-      document.getElementById('invitation-title')?.focus({ preventScroll: true })
-    }, 900)
-    return () => window.clearTimeout(focusTimer)
-  }, [opened])
-
   const handleOpen = useCallback(() => {
-    window.scrollTo(0, 0)
     setOpened(true)
   }, [])
 
@@ -72,7 +81,9 @@ function InvitationExperience({ guestName }: { guestName: string | null }) {
           mainRef={mainRef}
         />
         <AnimatePresence>
-          {!opened ? <EnvelopeOpening onOpen={handleOpen} /> : null}
+          {!opened ? (
+            <EnvelopeOpening onOpen={handleOpen} guestName={guestName} />
+          ) : null}
         </AnimatePresence>
         <Toast toast={toast} />
       </LayoutGroup>
@@ -80,16 +91,44 @@ function InvitationExperience({ guestName }: { guestName: string | null }) {
   )
 }
 
-function InvitationRoute() {
-  return <InvitationExperience guestName={useGuestName()} />
+interface InvitationRouteProps {
+  canonicalPath: string
+  config: typeof weddingConfig
+}
+
+function InvitationRoute({ canonicalPath, config }: InvitationRouteProps) {
+  return (
+    <WeddingConfigProvider config={config}>
+      <InvitationExperience
+        guestName={useGuestName()}
+        canonicalPath={canonicalPath}
+        config={config}
+      />
+    </WeddingConfigProvider>
+  )
+}
+
+function LegacyWeddingRoute() {
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    url.pathname = '/janti'
+    window.history.replaceState(window.history.state, '', url)
+  }, [])
+
+  return <InvitationRoute canonicalPath="/janti" config={weddingConfig} />
 }
 
 function App() {
   const pathname = window.location.pathname.replace(/\/+$/, '')
-  return pathname === '/generate' ? (
-    <InvitationLinkGeneratorPage />
-  ) : (
-    <InvitationRoute />
+  if (pathname === '/generate') return <InvitationLinkGeneratorPage />
+  if (pathname === '') return <LegacyWeddingRoute />
+
+  const isReception = pathname === '/reception'
+  return (
+    <InvitationRoute
+      canonicalPath={isReception ? '/reception' : '/janti'}
+      config={isReception ? receptionConfig : weddingConfig}
+    />
   )
 }
 

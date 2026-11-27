@@ -8,6 +8,7 @@ import { PhotoGallery } from './PhotoGallery'
 
 import { VenueSection } from './VenueSection'
 import { WeddingDetails } from './WeddingDetails'
+import { useWeddingConfig } from '../hooks/useWeddingConfig'
 
 interface InvitationPageProps {
   guestName: string | null
@@ -20,6 +21,8 @@ export function InvitationPage({
   opened,
   mainRef,
 }: InvitationPageProps) {
+  const weddingConfig = useWeddingConfig()
+
   return (
     <main
       ref={mainRef}
@@ -27,11 +30,13 @@ export function InvitationPage({
       aria-hidden={opened ? undefined : true}
       className="relative min-h-[100svh] bg-peach"
     >
-      <GaneshSection />
+      <GaneshSection ganeshLayoutId={opened ? 'ganesh-morph' : undefined} />
       <CoupleSection />
       <GuestGreeting guestName={guestName} />
       <PhotoGallery />
-      <WeddingDetails />
+      {weddingConfig.invitationType === 'wedding' ? (
+        <WeddingDetails />
+      ) : null}
       <EventSchedule />
       <VenueSection />
       <ClosingSection />

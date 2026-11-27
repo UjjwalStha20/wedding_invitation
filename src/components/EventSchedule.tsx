@@ -20,6 +20,7 @@ const eventIcons: Record<EventIcon, LucideIcon> = {
 export function EventSchedule() {
   const weddingConfig = useWeddingConfig()
   const events = weddingConfig.events.filter((event) => event.enabled)
+  const receptionOnly = weddingConfig.invitationType === 'reception'
 
   if (events.length === 0) return null
 
@@ -45,9 +46,13 @@ export function EventSchedule() {
       <div className="relative z-10 mx-auto max-w-3xl px-5 sm:px-8">
         <SectionTitle
           headingId="events-heading"
-          nepali="विवाहका कार्यक्रम"
-          title="Wedding Events"
-          subtitle="Join us to celebrate our wedding."
+          nepali={receptionOnly ? 'रिसेप्सन समारोह' : 'विवाहका कार्यक्रम'}
+          title={receptionOnly ? 'Reception Celebration' : 'Wedding Events'}
+          subtitle={
+            receptionOnly
+              ? 'Join us for an evening of celebration.'
+              : 'Join us to celebrate our wedding.'
+          }
         />
 
         <ol className="mt-9 space-y-5">

@@ -1,3 +1,5 @@
+import { useWeddingConfig } from '../../hooks/useWeddingConfig'
+
 interface MonogramProps {
   groomName: string
   brideName: string
@@ -13,6 +15,8 @@ export function Monogram({
   brideName,
   className = '',
 }: MonogramProps) {
+  const weddingConfig = useWeddingConfig()
+
   return (
     <div
       className={`relative grid aspect-square place-items-center rounded-full border border-burgundy/40 bg-cream text-burgundy shadow-soft ${className}`}
@@ -40,7 +44,9 @@ export function Monogram({
       </div>
 
       <span className="absolute bottom-[18%] font-devanagari text-[0.6rem] tracking-[0.18em] text-leaf-deep">
-        शुभ विवाह
+        {weddingConfig.invitationType === 'reception'
+          ? 'रिसेप्सन'
+          : 'शुभ विवाह'}
       </span>
 
       <svg

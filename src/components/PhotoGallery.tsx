@@ -189,7 +189,9 @@ export function PhotoGallery() {
       >
         <div className="relative bg-burgundy-deep px-4 pb-4 pt-12 sm:px-6">
           <h2 id="gallery-lightbox-title" className="sr-only">
-            Wedding photo viewer
+            {weddingConfig.invitationType === 'reception'
+              ? 'Reception photo viewer'
+              : 'Wedding photo viewer'}
           </h2>
 
           <AnimatePresence mode="wait" initial={false}>

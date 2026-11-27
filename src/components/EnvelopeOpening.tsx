@@ -5,29 +5,56 @@ import { FloralCorner } from './decorations/FloralCorner'
 import { GaneshMotif } from './decorations/GaneshMotif'
 import { OrnamentalBorder } from './decorations/OrnamentalBorder'
 import { PaperPattern } from './decorations/PaperPattern'
+import { WaxSeal } from './decorations/WaxSeal'
 import { InvitationCover } from './InvitationCover'
 
 interface EnvelopeOpeningProps {
   onOpen: () => void
+  guestName: string | null
 }
 
 const MORPH_DELAY = 850
 const OPEN_DELAY = 2100
 
-export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
+export function EnvelopeOpening({ onOpen, guestName }: EnvelopeOpeningProps) {
   const weddingConfig = useWeddingConfig()
+  const reduceMotion = useReducedMotion()
   const [isOpening, setIsOpening] = useState(false)
   const [morphing, setMorphing] = useState(false)
-  const reduceMotion = useReducedMotion()
   const tapButtonRef = useRef<HTMLButtonElement>(null)
-  const skipButtonRef = useRef<HTMLButtonElement>(null)
+  const openingStartedRef = useRef(false)
   const morphTimerRef = useRef<number | null>(null)
   const openTimerRef = useRef<number | null>(null)
   const onOpenRef = useRef(onOpen)
+  const handleOpenRef = useRef<() => void>(() => {})
 
   useEffect(() => {
     onOpenRef.current = onOpen
   }, [onOpen])
+
+  const handleOpen = useCallback(() => {
+    if (openingStartedRef.current) return
+    openingStartedRef.current = true
+
+    if (reduceMotion) {
+      onOpenRef.current()
+      return
+    }
+
+    setIsOpening(true)
+    morphTimerRef.current = window.setTimeout(
+      () => setMorphing(true),
+      MORPH_DELAY,
+    )
+    openTimerRef.current = window.setTimeout(
+      () => onOpenRef.current(),
+      OPEN_DELAY,
+    )
+  }, [reduceMotion])
+
+  useEffect(() => {
+    handleOpenRef.current = handleOpen
+  }, [handleOpen])
 
   useEffect(() => {
     const previousFocus = document.activeElement as HTMLElement | null
@@ -36,13 +63,13 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault()
-        onOpenRef.current()
+        handleOpenRef.current()
         return
       }
 
       if (event.key !== 'Tab') return
 
-      const focusable = [tapButtonRef.current, skipButtonRef.current].filter(
+      const focusable = [tapButtonRef.current].filter(
         (element): element is HTMLButtonElement => Boolean(element),
       )
 
@@ -80,25 +107,6 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       if (previousFocus?.isConnected) previousFocus.focus()
     }
   }, [])
-
-  const handleOpen = useCallback(() => {
-    if (isOpening) return
-
-    if (reduceMotion) {
-      onOpenRef.current()
-      return
-    }
-
-    setIsOpening(true)
-    morphTimerRef.current = window.setTimeout(
-      () => setMorphing(true),
-      MORPH_DELAY,
-    )
-    openTimerRef.current = window.setTimeout(
-      () => onOpenRef.current(),
-      OPEN_DELAY,
-    )
-  }, [isOpening, reduceMotion])
 
   const { groom, bride } = weddingConfig.couple
   const { date, hero } = weddingConfig
@@ -144,7 +152,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       </motion.div>
 
       <motion.div
-        className="absolute inset-x-0 bottom-0 z-30 h-[48%] overflow-hidden [will-change:transform,opacity]"
+        className="absolute inset-x-0 bottom-0 z-30 h-[50%] overflow-hidden [will-change:transform,opacity]"
         aria-hidden="true"
         initial={false}
         animate={isOpening ? { y: '24%', opacity: 0 } : { y: 0, opacity: 1 }}
@@ -201,6 +209,22 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
           >
             {hero.nepali}
           </p>
+          {guestName ? (
+            <div className="mt-1.5 flex w-full max-w-md flex-col items-center px-2">
+              <p className="max-w-xs font-body text-[clamp(0.7rem,2.4vw,0.85rem)] leading-tight text-brown/75">
+                We warmly invite you,{' '}
+                <span className="text-[1.15em] font-semibold text-burgundy-deep [overflow-wrap:anywhere]">
+                  {guestName}
+                </span>
+                , to join us in celebrating our{' '}
+                {weddingConfig.invitationType}.
+              </p>
+              <span
+                aria-hidden="true"
+                className="mt-1.5 h-px w-12 bg-gold/55"
+              />
+            </div>
+          ) : null}
           <p className="mt-2 font-script text-[clamp(1.9rem,6vw,2.9rem)] leading-tight text-burgundy">
             {groom.name.split(' ')[0]}
             <span className="mx-2 font-body text-blush">&amp;</span>
@@ -223,7 +247,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
       </motion.div>
 
       <motion.div
-        className="absolute inset-x-0 top-0 z-30 h-[58%] origin-top [backface-visibility:hidden] [transform-style:preserve-3d] [will-change:transform]"
+        className="absolute inset-x-0 top-0 z-30 h-[50%] origin-top [backface-visibility:hidden] [transform-style:preserve-3d] [will-change:transform]"
         aria-hidden="true"
         initial={false}
         animate={isOpening ? { rotateX: -178 } : { rotateX: 0 }}
@@ -286,15 +310,17 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
           <span
             className={`absolute inset-0 rounded-full border border-burgundy/35 ${reduceMotion ? '' : 'animate-seal-pulse'}`}
           />
-          <div className="relative grid h-20 w-20 place-items-center rounded-full border border-blush/70 bg-burgundy shadow-[0_10px_30px_rgba(110,12,16,0.4)] sm:h-28 sm:w-28">
-            <div className="absolute inset-[7%] rounded-full border border-cream/40" />
+          <WaxSeal className="relative h-20 w-20 sm:h-28 sm:w-28">
             <motion.div
               layoutId="ganesh-morph"
+              transition={{
+                layout: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
+              }}
               className="relative aspect-[13/15] w-[58%]"
             >
               <GaneshMotif tone="cream" className="h-full w-full" />
             </motion.div>
-          </div>
+          </WaxSeal>
         </motion.div>
       ) : null}
 
@@ -303,7 +329,7 @@ export function EnvelopeOpening({ onOpen }: EnvelopeOpeningProps) {
         type="button"
         onClick={handleOpen}
         disabled={isOpening}
-        aria-label="Open wedding invitation"
+        aria-label={`Open ${weddingConfig.invitationType} invitation`}
         aria-busy={isOpening}
         className="absolute inset-0 z-50 cursor-pointer select-none bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-burgundy disabled:cursor-wait"
       />

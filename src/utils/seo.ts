@@ -31,20 +31,24 @@ function upsertCanonical(href: string) {
   link.href = href
 }
 
-export function applyWeddingSeo(config: WeddingConfig) {
+export function applyWeddingSeo(
+  config: WeddingConfig,
+  canonicalPath = '/janti',
+) {
   if (typeof document === 'undefined') return
 
   const siteBase = `${getSiteBaseUrl().replace(/\/+$/, '')}/`
   const ogImage = new URL('images/og-image.png', siteBase).toString()
+  const canonicalUrl = new URL(canonicalPath.replace(/^\/+/, ''), siteBase).toString()
 
   document.title = config.seo.title
-  upsertCanonical(siteBase)
+  upsertCanonical(canonicalUrl)
 
   upsertMeta('name', 'description', config.seo.description)
   upsertMeta('property', 'og:site_name', `${config.couple.groom.name.split(' ')[0]} & ${config.couple.bride.name.split(' ')[0]}`)
   upsertMeta('property', 'og:title', config.seo.ogTitle)
   upsertMeta('property', 'og:description', config.seo.ogDescription)
-  upsertMeta('property', 'og:url', siteBase)
+  upsertMeta('property', 'og:url', canonicalUrl)
   upsertMeta('property', 'og:image', ogImage)
   upsertMeta('property', 'og:image:alt', config.seo.ogTitle)
   upsertMeta('name', 'twitter:title', config.seo.ogTitle)
@@ -64,7 +68,9 @@ export function applyWeddingSeo(config: WeddingConfig) {
   schema.textContent = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'Event',
-    name: `${config.couple.groom.name} & ${config.couple.bride.name} Wedding`,
+    name: `${config.couple.groom.name} & ${config.couple.bride.name} ${
+      config.invitationType === 'reception' ? 'Reception' : 'Wedding'
+    }`,
     description: config.seo.description,
     startDate: config.date.startDateTime,
     endDate: config.date.endDateTime,

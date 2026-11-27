@@ -1,8 +1,16 @@
 import { useState, type FormEvent } from 'react'
 import { ArrowLeft, Copy, RotateCcw, Share2 } from 'lucide-react'
+import { receptionConfig } from '../config/reception'
 import { weddingConfig } from '../config/wedding'
-import { normalizeGuestName, buildWhatsAppMessage } from '../utils/invitation'
+import {
+  buildInvitationUrl,
+  buildWhatsAppMessage,
+  getSiteBaseUrl,
+  normalizeGuestName,
+} from '../utils/invitation'
 import { FloralCorner } from './decorations/FloralCorner'
+
+type InvitationType = 'wedding' | 'reception'
 
 type Feedback = {
   message: string
@@ -13,19 +21,22 @@ export function InvitationLinkGeneratorPage() {
   const [guestNameInput, setGuestNameInput] = useState('')
   const [generatedName, setGeneratedName] = useState<string | null>(null)
   const [generatedUrl, setGeneratedUrl] = useState<string | null>(null)
+  const [generatedInvitationType, setGeneratedInvitationType] =
+    useState<InvitationType>('wedding')
   const [feedback, setFeedback] = useState<Feedback | null>(null)
 
+  const generatedConfig =
+    generatedInvitationType === 'reception' ? receptionConfig : weddingConfig
   const invitationMessage = generatedName && generatedUrl
     ? buildWhatsAppMessage(
         generatedName,
         generatedUrl,
-        weddingConfig.messages.whatsappTemplate,
-        weddingConfig.messages.genericGuestName,
+        generatedConfig.messages.whatsappTemplate,
+        generatedConfig.messages.genericGuestName,
       )
     : ''
 
-  function handleGenerate(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+  function generateInvitationLink(invitationType: InvitationType) {
     const name = normalizeGuestName(guestNameInput)
 
     if (!name) {
@@ -33,17 +44,25 @@ export function InvitationLinkGeneratorPage() {
       return
     }
 
+    const baseUrl = new URL(getSiteBaseUrl())
+    baseUrl.pathname = invitationType === 'reception' ? '/reception' : '/janti'
+
     setGeneratedName(name)
-    setGeneratedUrl(
-      `${window.location.origin}/?name=${encodeURIComponent(name)}`,
-    )
+    setGeneratedUrl(buildInvitationUrl(name, baseUrl.toString()))
+    setGeneratedInvitationType(invitationType)
     setFeedback(null)
+  }
+
+  function handleGenerate(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    generateInvitationLink('wedding')
   }
 
   function handleReset() {
     setGuestNameInput('')
     setGeneratedName(null)
     setGeneratedUrl(null)
+    setGeneratedInvitationType('wedding')
     setFeedback(null)
   }
 
@@ -74,8 +93,8 @@ export function InvitationLinkGeneratorPage() {
 
     try {
       await navigator.share({
-        title: weddingConfig.seo.title,
-        text: `${generatedName}, ${weddingConfig.messages.guestInvitation}`,
+        title: generatedConfig.seo.title,
+        text: `${generatedName}, ${generatedConfig.messages.guestInvitation}`,
         url: generatedUrl,
       })
       setFeedback({ message: 'Invitation shared.', tone: 'success' })
@@ -109,7 +128,7 @@ export function InvitationLinkGeneratorPage() {
         aria-labelledby="generator-title"
       >
         <a
-          href="/"
+          href="/janti"
           className="inline-flex items-center gap-2 font-display text-sm text-brown transition-colors hover:text-burgundy"
         >
           <ArrowLeft size={16} aria-hidden="true" />
@@ -128,7 +147,7 @@ export function InvitationLinkGeneratorPage() {
             Create a guest link
           </h1>
           <p className="mx-auto mt-3 max-w-md font-body text-base text-brown">
-            Enter a guest's name to create a personal invitation link.
+            Enter a guest's name to create a personal wedding or reception invitation link.
           </p>
         </div>
 
@@ -153,13 +172,24 @@ export function InvitationLinkGeneratorPage() {
             type="submit"
             className="mt-4 w-full rounded-xl bg-burgundy px-5 py-3 font-display text-sm font-semibold tracking-wide text-ivory-soft shadow-soft transition-colors hover:bg-burgundy-deep"
           >
-            Create Invitation Link
+            Create Wedding Invitation Link
+          </button>
+          <button
+            type="button"
+            onClick={() => generateInvitationLink('reception')}
+            className="mt-3 w-full rounded-xl border border-burgundy/30 bg-white/70 px-5 py-3 font-display text-sm font-semibold tracking-wide text-burgundy transition-colors hover:bg-white"
+          >
+            Create Reception Invitation Link
           </button>
         </form>
 
         {generatedName && generatedUrl ? (
           <div className="mt-8 border-t border-gold/25 pt-6">
-            <p className="font-display text-sm text-brown">Invitation for</p>
+            <p className="font-display text-sm text-brown">
+              {generatedInvitationType === 'reception'
+                ? 'Reception invitation for'
+                : 'Wedding invitation for'}
+            </p>
             <p className="mt-1 break-words font-display text-xl text-burgundy">
               {generatedName}
             </p>

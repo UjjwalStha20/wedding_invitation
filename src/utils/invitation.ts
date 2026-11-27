@@ -61,7 +61,7 @@ export function getSiteBaseUrl(): string {
 
 export function buildInvitationUrl(
   guestName: string | null | undefined,
-  baseUrl = getSiteBaseUrl(),
+  baseUrl = new URL('/janti', getSiteBaseUrl()).toString(),
 ): string {
   const url = new URL(baseUrl)
   url.hash = ''
