@@ -14,9 +14,8 @@ Edit `src/config/wedding.ts` to update the invitation details. An optional
 `?name=` query parameter displays a personalized greeting.
 
 Visit `/generate` to create personalized invitation links using that same
-`?name=` format.
-Vercel rewrites `/generate` to the app entry point so the route works on direct
-visits and page refreshes.
+`?name=` format. Vercel rewrites `/janti`, `/generate`, and `/reception` so each
+invitation route works on direct visits and page refreshes.
 
 Set `VITE_SITE_URL` in `.env` to configure the canonical and social-sharing
 URLs for deployment.

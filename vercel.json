@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/janti",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/janti/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/reception",
       "destination": "/reception.html"
     },
