@@ -144,12 +144,13 @@ export function InvitationLinkGeneratorPage() {
     if (!generatedUrl) return
 
     const copyPromise = copyText(invitationMessage)
-    window.location.href = 'whatsapp://send'
+    window.location.href =
+      `whatsapp://send?text=${encodeURIComponent(invitationMessage)}`
 
     void copyPromise.then((copied) => {
       setFeedback({
         message: copied
-          ? 'Full invitation copied. Choose a WhatsApp chat and paste the message.'
+          ? 'Full invitation prepared in WhatsApp. The message is also copied as a backup.'
           : 'WhatsApp opened, but the invitation could not be copied. Please copy the invitation link above.',
         tone: copied ? 'success' : 'error',
       })
