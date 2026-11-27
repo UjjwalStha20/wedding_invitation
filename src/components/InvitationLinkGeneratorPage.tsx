@@ -135,11 +135,14 @@ export function InvitationLinkGeneratorPage() {
     })
   }
 
-  async function handleShare() {
+  async function shareInvitation(
+    fallback: () => Promise<void>,
+    successMessage = 'Invitation shared.',
+  ) {
     if (!generatedUrl) return
 
     if (!navigator.share) {
-      await copyInvitationMessageAndOpenMessengerApp()
+      await fallback()
       return
     }
 
@@ -148,54 +151,26 @@ export function InvitationLinkGeneratorPage() {
         title: generatedConfig.seo.title,
         text: invitationMessage,
       })
-      setFeedback({ message: 'Invitation shared.', tone: 'success' })
+      setFeedback({ message: successMessage, tone: 'success' })
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') return
-      await copyInvitationMessageAndOpenMessengerApp()
+      await fallback()
     }
   }
 
-  async function handleWhatsAppShare() {
-    if (!generatedUrl) return
+  function handleShare() {
+    return shareInvitation(copyInvitationMessageAndOpenMessengerApp)
+  }
 
-    if (!navigator.share) {
-      await copyInvitationMessageAndOpenWhatsAppApp()
-      return
-    }
-
-    try {
-      await navigator.share({
-        title: generatedConfig.seo.title,
-        text: invitationMessage,
-      })
-      setFeedback({ message: 'Invitation shared.', tone: 'success' })
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') return
-      await copyInvitationMessageAndOpenWhatsAppApp()
-    }
+  function handleWhatsAppShare() {
+    return shareInvitation(copyInvitationMessageAndOpenWhatsAppApp)
   }
 
   async function handleMessengerShare() {
-    if (!generatedUrl) return
-
-    if (!navigator.share) {
-      await copyInvitationMessageAndOpenMessengerApp()
-      return
-    }
-
-    try {
-      await navigator.share({
-        title: generatedConfig.seo.title,
-        text: invitationMessage,
-      })
-      setFeedback({
-        message: 'Choose Messenger from the share menu to send the invitation.',
-        tone: 'success',
-      })
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') return
-      await copyInvitationMessageAndOpenMessengerApp()
-    }
+    return shareInvitation(
+      copyInvitationMessageAndOpenMessengerApp,
+      'Choose Messenger from the share menu to send the invitation.',
+    )
   }
 
   return (
