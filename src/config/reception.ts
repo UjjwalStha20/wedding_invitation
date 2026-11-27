@@ -50,9 +50,9 @@ export const receptionConfig: WeddingConfig = {
   seo: {
     title: 'Rakesh & Prumu — Reception Invitation',
     description:
-      'Rakesh Shrestha and Prumu Waiba Lama invite you to celebrate their reception on 8 December 2026 at Aagantuk Resort in Dhulikhel.',
+      'Rakesh Shrestha and Prumu Waiba Lama invite you to celebrate their reception on २२ मंसिर २०८३ (8 December 2026).',
     ogTitle: 'Rakesh & Prumu — Reception Invitation',
     ogDescription:
-      'Join Rakesh and Prumu for their reception on 8 December 2026 in Dhulikhel.',
+      'Join Rakesh and Prumu for their reception on २२ मंसिर २०८३ (8 December 2026).',
   },
 }

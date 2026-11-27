@@ -16,5 +16,15 @@ export default defineConfig(({ mode }) => {
     },
   }
 
-  return { plugins: [react(), tailwindcss(), injectSiteUrl] }
+  return {
+    plugins: [react(), tailwindcss(), injectSiteUrl],
+    build: {
+      rollupOptions: {
+        input: {
+          main: 'index.html',
+          reception: 'reception.html',
+        },
+      },
+    },
+  }
 })

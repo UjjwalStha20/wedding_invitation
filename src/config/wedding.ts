@@ -240,9 +240,9 @@ export const weddingConfig: WeddingConfig = {
   seo: {
     title: 'Rakesh & Prumu — Shubh Vivah | Nepali Wedding Invitation',
     description:
-      'Rakesh Shrestha and Prumu Waiba Lama invite you to celebrate their wedding on 6 December 2026 at Aagantuk Resort in Dhulikhel.',
+      'Rakesh Shrestha and Prumu Waiba Lama invite you to celebrate their wedding on २० मंसिर २०८३ (6 December 2026).',
     ogTitle: 'Rakesh & Prumu — Shubh Vivah',
     ogDescription:
-      'Join us to celebrate our wedding on 6 December 2026 in Dhulikhel.',
+      'Join us to celebrate our wedding on २० मंसिर २०८३ (6 December 2026).',
   },
 }

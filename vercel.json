@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/reception",
+      "destination": "/reception.html"
+    },
+    {
+      "source": "/reception/",
+      "destination": "/reception.html"
+    },
+    {
       "source": "/generate",
       "destination": "/index.html"
     },

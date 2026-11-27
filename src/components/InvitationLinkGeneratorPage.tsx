@@ -1,7 +1,14 @@
 import { useState, type FormEvent } from 'react'
-import { ArrowLeft, Copy, RotateCcw, Share2 } from 'lucide-react'
+import {
+  ArrowLeft,
+  Copy,
+  MessageCircle,
+  RotateCcw,
+  Share2,
+} from 'lucide-react'
 import { receptionConfig } from '../config/reception'
 import { weddingConfig } from '../config/wedding'
+import { copyText } from '../utils/clipboard'
 import {
   buildInvitationUrl,
   buildWhatsAppMessage,
@@ -27,11 +34,21 @@ export function InvitationLinkGeneratorPage() {
 
   const generatedConfig =
     generatedInvitationType === 'reception' ? receptionConfig : weddingConfig
+  const eventDetails = generatedConfig.events
+    .filter((event) => event.enabled)
+    .map(
+      (event) =>
+        `${event.name} / ${event.nepaliName}\nDate: ${event.dateNepali ?? event.date} (${event.gregorianDate})\nTime: ${event.time}\nLocation: ${event.venue}`,
+    )
+    .join('\n\n')
   const invitationMessage = generatedName && generatedUrl
     ? buildWhatsAppMessage(
         generatedName,
         generatedUrl,
-        generatedConfig.messages.whatsappTemplate,
+        generatedConfig.messages.whatsappTemplate.replace(
+          'Open your invitation using this link:',
+          `${eventDetails}\n\n“${generatedConfig.seo.ogDescription}”\n\nOpen your invitation using this link:`,
+        ),
         generatedConfig.messages.genericGuestName,
       )
     : ''
@@ -83,32 +100,84 @@ export function InvitationLinkGeneratorPage() {
     }
   }
 
+  async function copyInvitationMessageAndOpenMessengerApp() {
+    if (!generatedUrl) return
+
+    const copyPromise = copyText(invitationMessage)
+    window.location.href = 'fb-messenger://'
+
+    const copied = await copyPromise
+    if (copied) {
+      setFeedback({
+        message: 'Full invitation copied. Choose a Messenger conversation and paste the message.',
+        tone: 'success',
+      })
+    } else {
+      setFeedback({
+        message: 'Messenger opened, but the invitation could not be copied. Copy the invitation link above.',
+        tone: 'error',
+      })
+    }
+  }
+
   async function handleShare() {
     if (!generatedUrl) return
 
     if (!navigator.share) {
-      await copyInvitationLink('Sharing is unavailable. Link copied.')
+      await copyInvitationMessageAndOpenMessengerApp()
       return
     }
 
     try {
       await navigator.share({
         title: generatedConfig.seo.title,
-        text: `${generatedName}, ${generatedConfig.messages.guestInvitation}`,
-        url: generatedUrl,
+        text: invitationMessage,
       })
       setFeedback({ message: 'Invitation shared.', tone: 'success' })
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') return
-      await copyInvitationLink(
-        'Could not share. Link copied instead.',
-      )
+      await copyInvitationMessageAndOpenMessengerApp()
     }
   }
 
-  const whatsappUrl = generatedUrl
-    ? `https://wa.me/?text=${encodeURIComponent(invitationMessage)}`
-    : undefined
+  function handleWhatsAppShare() {
+    if (!generatedUrl) return
+
+    const copyPromise = copyText(invitationMessage)
+    window.location.href = 'whatsapp://send'
+
+    void copyPromise.then((copied) => {
+      setFeedback({
+        message: copied
+          ? 'Full invitation copied. Choose a WhatsApp chat and paste the message.'
+          : 'WhatsApp opened, but the invitation could not be copied. Please copy the invitation link above.',
+        tone: copied ? 'success' : 'error',
+      })
+    })
+  }
+
+  async function handleMessengerShare() {
+    if (!generatedUrl) return
+
+    if (!navigator.share) {
+      await copyInvitationMessageAndOpenMessengerApp()
+      return
+    }
+
+    try {
+      await navigator.share({
+        title: generatedConfig.seo.title,
+        text: invitationMessage,
+      })
+      setFeedback({
+        message: 'Choose Messenger from the share menu to send the invitation.',
+        tone: 'success',
+      })
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') return
+      await copyInvitationMessageAndOpenMessengerApp()
+    }
+  }
 
   return (
     <main className="relative grid min-h-screen place-items-center overflow-hidden bg-cream px-5 py-12 text-burgundy">
@@ -216,14 +285,21 @@ export function InvitationLinkGeneratorPage() {
                 <Copy size={17} aria-hidden="true" />
                 Copy Link
               </button>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                type="button"
+                onClick={() => void handleWhatsAppShare()}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#456b45] px-4 py-3 font-display text-sm font-semibold text-white transition-colors hover:bg-[#365536]"
               >
-                Share via WhatsApp
-              </a>
+                Copy Message & Open WhatsApp
+              </button>
+              <button
+                type="button"
+                onClick={() => void handleMessengerShare()}
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#0084ff] px-4 py-3 font-display text-sm font-semibold text-white transition-colors hover:bg-[#006edb]"
+              >
+                <MessageCircle size={17} aria-hidden="true" />
+                Share via Messenger
+              </button>
               <button
                 type="button"
                 onClick={() => void handleShare()}
