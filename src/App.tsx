@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { EnvelopeOpening } from './components/EnvelopeOpening'
 import { InvitationLinkGeneratorPage } from './components/InvitationLinkGeneratorPage'
 import { InvitationPage } from './components/InvitationPage'
+import { HomePage } from './components/HomePage'
 import { ErrorBoundary } from './components/ui/ErrorBoundary'
 import { Toast, type ToastMessage } from './components/ui/Toast'
 import { receptionConfig } from './config/reception'
@@ -108,20 +109,10 @@ function InvitationRoute({ canonicalPath, config }: InvitationRouteProps) {
   )
 }
 
-function LegacyWeddingRoute() {
-  useEffect(() => {
-    const url = new URL(window.location.href)
-    url.pathname = '/janti'
-    window.history.replaceState(window.history.state, '', url)
-  }, [])
-
-  return <InvitationRoute canonicalPath="/janti" config={weddingConfig} />
-}
-
 function App() {
   const pathname = window.location.pathname.replace(/\/+$/, '')
   if (pathname === '/generate') return <InvitationLinkGeneratorPage />
-  if (pathname === '') return <LegacyWeddingRoute />
+  if (pathname === '') return <HomePage />
 
   const isReception = pathname === '/reception'
   return (
