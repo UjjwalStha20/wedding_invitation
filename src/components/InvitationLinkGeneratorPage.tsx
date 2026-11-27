@@ -120,6 +120,21 @@ export function InvitationLinkGeneratorPage() {
     }
   }
 
+  async function copyInvitationMessageAndOpenWhatsAppApp() {
+    if (!generatedUrl) return
+
+    const copyPromise = copyText(invitationMessage)
+    window.location.href = 'whatsapp://send'
+
+    const copied = await copyPromise
+    setFeedback({
+      message: copied
+        ? 'Full invitation copied. Choose a WhatsApp chat and paste the message.'
+        : 'WhatsApp opened, but the invitation could not be copied. Copy the invitation link above.',
+      tone: copied ? 'success' : 'error',
+    })
+  }
+
   async function handleShare() {
     if (!generatedUrl) return
 
@@ -140,21 +155,24 @@ export function InvitationLinkGeneratorPage() {
     }
   }
 
-  function handleWhatsAppShare() {
+  async function handleWhatsAppShare() {
     if (!generatedUrl) return
 
-    const copyPromise = copyText(invitationMessage)
-    window.location.href =
-      `whatsapp://send?text=${encodeURIComponent(invitationMessage)}`
+    if (!navigator.share) {
+      await copyInvitationMessageAndOpenWhatsAppApp()
+      return
+    }
 
-    void copyPromise.then((copied) => {
-      setFeedback({
-        message: copied
-          ? 'Full invitation prepared in WhatsApp. The message is also copied as a backup.'
-          : 'WhatsApp opened, but the invitation could not be copied. Please copy the invitation link above.',
-        tone: copied ? 'success' : 'error',
+    try {
+      await navigator.share({
+        title: generatedConfig.seo.title,
+        text: invitationMessage,
       })
-    })
+      setFeedback({ message: 'Invitation shared.', tone: 'success' })
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') return
+      await copyInvitationMessageAndOpenWhatsAppApp()
+    }
   }
 
   async function handleMessengerShare() {
@@ -291,7 +309,7 @@ export function InvitationLinkGeneratorPage() {
                 onClick={() => void handleWhatsAppShare()}
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#456b45] px-4 py-3 font-display text-sm font-semibold text-white transition-colors hover:bg-[#365536]"
               >
-                Copy Message & Open WhatsApp
+                Share via WhatsApp
               </button>
               <button
                 type="button"
